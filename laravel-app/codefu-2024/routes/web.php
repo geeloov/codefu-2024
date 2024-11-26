@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
+use App\Http\Controllers\LoginController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -61,3 +62,4 @@ Route::get('/auth/callback', function () {
 
 Route::get('/auth/facebook', [FacebookController::class, 'facebookpage']);
 Route::get('/auth/facebook/callback', [FacebookController::class, 'facebookcallback']);
+Route::get('/login', [LoginController::class, 'loginpage']);
