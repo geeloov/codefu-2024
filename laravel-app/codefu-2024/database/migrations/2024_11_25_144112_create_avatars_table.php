@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('avatars', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name');
+            $table->string('username')->unique();
             $table->boolean('healthy');
             $table->bigInteger('points');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
