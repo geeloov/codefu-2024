@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voronoi Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://d3js.org/d3-delaunay.v6.min.js"></script>
+    <style>
+        #map { height: 100vh; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        // Initialize Leaflet map
+        const map = L.map('map').setView([41.9981, 21.4254], 12); // Skopje center
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Fetch data from the proxy server
+        fetch('http://localhost:3000/api/sensors')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data); // Log fetched data for debugging
+
+                // Transform API data into sensor objects
+                const sensors = data.map(sensor => {
+                    const [lat, lon] = sensor.position.split(',').map(coord => parseFloat(coord)); // Split and parse coordinates
+                    return {
+                        id: sensor.sensorId, // Updated key for sensor ID
+                        coordinates: [lon, lat], // Note: Leaflet expects [lon, lat] format
+                        pm25: parseFloat(sensor.value), // Convert PM2.5 value to a number
+                    };
+                });
+
+                // Extract coordinates for Voronoi
+                const points = sensors.map(sensor => sensor.coordinates);
+
+                // Create Voronoi diagram using d3
+                const bounds = map.getBounds();
+                const xMin = bounds.getWest();
+                const yMin = bounds.getSouth();
+                const xMax = bounds.getEast();
+                const yMax = bounds.getNorth();
+
+                const delaunay = d3.Delaunay.from(points);
+                const voronoi = delaunay.voronoi([xMin, yMin, xMax, yMax]);
+
+                // Convert Voronoi polygons to GeoJSON
+                const geoJson = {
+                    type: 'FeatureCollection',
+                    features: sensors.map((sensor, i) => {
+                        const cell = voronoi.cellPolygon(i);
+                        if (!cell) return null; // Skip null polygons
+                        return {
+                            type: 'Feature',
+                            properties: { id: sensor.id, pm25: sensor.pm25 },
+                            geometry: {
+                                type: 'Polygon',
+                                coordinates: [cell.map(coord => [coord[0], coord[1]])],
+                            },
+                        };
+                    }).filter(feature => feature !== null), // Remove null features
+                };
+
+                // Define a color scale for PM2.5
+                const getColor = (pm25) => {
+                    return pm25 < 12 ? 'green' :
+                           pm25 < 35 ? 'yellow' :
+                           pm25 < 55 ? 'orange' : 'red';
+                };
+
+                // Add Voronoi polygons to the map
+                L.geoJSON(geoJson, {
+                    style: feature => ({
+                        fillColor: getColor(feature.properties.pm25),
+                        fillOpacity: 0.5,
+                        color: 'black',
+                        weight: 0,
+                    }),
+                    onEachFeature: (feature, layer) => {
+                        layer.bindPopup(`Sensor ID: ${feature.properties.id}<br>PM2.5: ${feature.properties.pm25}`);
+                    },
+                }).addTo(map);
+            })
+            .catch(error => console.error('Error fetching or processing data:', error));
+
+
+            // Add a marker for the user's location
+        function showUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const userLat = position.coords.latitude;
+                        const userLon = position.coords.longitude;
+
+                        // Add a marker to the map
+                        const userMarker = L.marker([userLat, userLon]).addTo(map);
+                        userMarker.bindPopup("You are here!").openPopup();
+
+                        // Optionally, center the map on the user's location
+                        map.setView([userLat, userLon], 13);
+                    },
+                    error => {
+                        console.error("Error accessing geolocation: ", error);
+                        alert("Could not access your location.");
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        }
+
+        // Call the function to locate the user
+        showUserLocation();
+
+    </script>
+</body>
+</html>
