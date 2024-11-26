@@ -34,6 +34,7 @@ class FacebookController extends Controller
             } else {
                 $newUser = User::create([
                     'name' => $user->name,
+                    'username' => $user->name+$user->id+1,
                     'email' => $user->email,
                     'facebook_id'=> $user->id,
                     'password' => encrypt('123456dummy')
@@ -46,4 +47,3 @@ class FacebookController extends Controller
         }
     }
 }
-    
