@@ -61,3 +61,11 @@ Route::get('/auth/callback', function () {
 
 Route::get('/auth/facebook', [FacebookController::class, 'facebookpage']);
 Route::get('/auth/facebook/callback', [FacebookController::class, 'facebookcallback']);
+
+Route::get('/welcome', function () {
+    return view('auth.welcome');
+});
+
+Route::get('/', function () {
+    return view('welcome');
+});
