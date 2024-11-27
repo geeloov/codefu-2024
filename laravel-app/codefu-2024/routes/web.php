@@ -4,6 +4,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,11 @@ Route::get('/auth/callback', function () {
 Route::get('/auth/facebook', [FacebookController::class, 'facebookpage']);
 Route::get('/auth/facebook/callback', [FacebookController::class, 'facebookcallback']);
 
+Route::get('/register', function () {
+    return view('register');
+});
+
+Route::post('/register', [RegisterController::class, 'store']);
 Route::get('/welcome', function () {
     return view('auth.welcome');
 });

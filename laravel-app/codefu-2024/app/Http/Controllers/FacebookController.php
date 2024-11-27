@@ -33,7 +33,7 @@ class FacebookController extends Controller
                 return redirect()->intended('dashboard');
             } else {
                 $newUser = User::create([
-                    'name' => $user->name,
+                    'fullname' => $user->fullname,
                     'username' => $user->name+$user->id+1,
                     'email' => $user->email,
                     'facebook_id'=> $user->id,
