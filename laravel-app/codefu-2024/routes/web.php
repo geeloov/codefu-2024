@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
-
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,3 +78,6 @@ Route::get('/welcome', function () {
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/login', [LoginController::class, 'loginpage']);
+Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
