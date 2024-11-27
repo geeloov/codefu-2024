@@ -9,6 +9,16 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
 </head>
 <body>
+    {{-- @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif --}}
+
     <div class="mt-20 text-center text-[25px] font-normal leading-6">
         <h1 class="text-[#747474]">Log In</h1>
     </div>
@@ -20,10 +30,17 @@
     </div>
 
 
-    <form action="" class="">
+    <form action="{{route('authenticate')}}" method="POST" class="">
+            @csrf
             <div class="text-center h-[93-px]">
-                <input type="text" placeholder="Email" id="email" class="w-[251px] h-[34px] rounded-[5px]">
-                <input type="text" placeholder="Password" id="password" class="w-[251px] h-[34px] rounded-[5px] mt-5">
+                <input type="text" placeholder="Email" id="email" name="email" value="{{ old('email') }}" class="w-[251px] h-[34px] rounded-[5px]">
+                 @error('email')
+                    <div class="err">{{ $message }}</div>
+                @enderror
+                <input type="text" placeholder="Password" id="password" name="password" class="w-[251px] h-[34px] rounded-[5px] mt-5">
+                @error('password')
+                    <div class="err">{{ $message }}</div>
+                @enderror
             </div>
         
 
@@ -102,7 +119,7 @@
         </div>
 
         <div class="flex justify-center align-middle mt-7">
-            <button class="w-[125px] h-[38px] border border-[#000000] rounded-[10px]">
+            <button class="w-[125px] h-[38px] border border-[#000000] rounded-[10px]" type="submit">
                 Log In
             </button>
         </div>
