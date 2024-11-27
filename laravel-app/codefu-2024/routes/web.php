@@ -4,6 +4,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -64,5 +65,19 @@ Route::get('/auth/callback', function () {
 
 Route::get('/auth/facebook', [FacebookController::class, 'facebookpage']);
 Route::get('/auth/facebook/callback', [FacebookController::class, 'facebookcallback']);
+
+Route::get('/register', function () {
+    return view('register');
+});
+
+Route::post('/register', [RegisterController::class, 'store']);
+Route::get('/welcome', function () {
+    return view('auth.welcome');
+});
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::get('/login', [LoginController::class, 'loginpage']);
 Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
