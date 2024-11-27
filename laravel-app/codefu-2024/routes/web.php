@@ -68,3 +68,10 @@ Route::get('/register', function () {
 });
 
 Route::post('/register', [RegisterController::class, 'store']);
+Route::get('/welcome', function () {
+    return view('auth.welcome');
+});
+
+Route::get('/', function () {
+    return view('welcome');
+});
