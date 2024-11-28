@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator; // Add this line
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -15,7 +17,7 @@ class RegisterController extends Controller
         $validated = Validator::make($request->all(), [
             'fullname' => 'required|string|min:2|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed', // 'confirmed' checks for password_confirmation
+            'password' => 'required|min:8|', 
             'health_status' => 'required|string',
             'birthdate' => 'required|date',
         ]);
@@ -30,7 +32,7 @@ class RegisterController extends Controller
             $user = new User();
             $user->fullname = $request->fullname;
             $user->email = $request->email;
-            $user->password = bcrypt($request->password);
+            $user->password = Hash::make($request->password);
             $user->health_status = $request->health_status;
             $user->birthdate = $request->birthdate;
             $user->save();
@@ -41,7 +43,7 @@ class RegisterController extends Controller
             return response()->json(['message' => 'User registered successfully!'], 201);
         } catch (\Exception $e) {
             // Log the exception and return error response
-            \Log::error('Registration failed: ' . $e->getMessage());
+            Log::error('Registration failed: ' . $e->getMessage());
             return response()->json(['error' => 'Registration failed, please try again later.'], 500);
         }
     }

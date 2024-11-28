@@ -3,11 +3,13 @@
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,3 +83,8 @@ Route::get('/', function () {
 
 Route::get('/login', [LoginController::class, 'loginpage']);
 Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
+Route::get('/settings', [SettingsController::class, 'settingspage'])->name('settings');
+
+Route::middleware('auth')->group(function () {
+    Route::put('user/update', [UserController::class, 'update'])->name('user.update');
+});
