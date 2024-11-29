@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\LoginController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\RegisterController;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\MaskDetectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,3 +96,7 @@ Route::get('/share_to_social_media', function (Request $request) {
     $imageUrl = $request->query('imageUrl');
     return view('share_to_social_media', ['imageUrl' => $imageUrl]);
 })->name('share_to_social_media');
+
+Route::get('forecast', function () {
+    return view('forecast');
+});

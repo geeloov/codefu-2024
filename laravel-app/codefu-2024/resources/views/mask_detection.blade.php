@@ -229,9 +229,7 @@ fetch('/detect-mask', {
         imageElement.src = data.imageUrl;
 
         // Redirect if the result is "The person is not wearing a mask."
-        if (data.result === "The person is wearing a mask.") {
             window.location.href = `/share_to_social_media?imageUrl=${encodeURIComponent(data.imageUrl)}&result=${encodeURIComponent(data.result)}`;
-        }
     }
 })
 .catch(error => {
@@ -239,6 +237,8 @@ fetch('/detect-mask', {
     resultText.textContent = 'Error sending the image to the server';
 });
 }
+
+console.log(imageUrl);
 
 </script>
 </body>

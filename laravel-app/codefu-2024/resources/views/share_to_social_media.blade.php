@@ -98,7 +98,7 @@
     @else
         <p>No image found to share.</p>
     @endif
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script>
         const canvas = document.getElementById('myCanvas');
         const ctx = canvas.getContext('2d');
@@ -132,14 +132,21 @@
 
         // Save image functionality
         document.getElementById('saveBtn').addEventListener('click', function() {
-            // Get the image as base64 string
-            const imageData = canvas.toDataURL('image/png');
-            
-            // Create a link element to trigger the download
-            const a = document.createElement('a');
-            a.href = imageData;  // Set the href to the base64 image
-            a.download = 'image_with_text.png';  // Name of the downloaded image file
-            a.click();  // Trigger the download
+            html2canvas(canvas, {
+                onrendered: function(canvas) {
+                    const img = canvas.toDataURL('image/png');
+                    const styledImage = new Image();
+                    styledImage.src = img;
+                    styledImage.style.borderRadius = '10px'; // Set your desired border radius
+                    styledImage.style.width = '300px'; // Set your desired width
+                    styledImage.style.height = '300px'; // Set your desired height
+
+                    const a = document.createElement('a');
+                    a.href = styledImage.src;
+                    a.download = 'image_with_text.png'; // Name of the downloaded image file
+                    a.click(); // Trigger the download
+                }
+            });
         });
 
         function shareToFacebook() {

@@ -77,4 +77,9 @@ public function uploadImage(Request $request)
 
     return view('share_to_social_media', compact('imageUrl', 'result'));
 }
+
+    public function index()
+{
+    return view('login');
+}
 }
