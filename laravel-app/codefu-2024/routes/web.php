@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MaskDetectionController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Http;
+// use App\Http\Controllers\ItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,3 +130,7 @@ Route::get('/api/sensors', function () {
     $response = Http::get('http://localhost:3000/api/sensors');
     return response()->json($response->json());
 });
+
+Route::get('/zone-data', [MaskDetectionController::class, 'getZoneData']);
+Route::get('/shop', [ShopController::class, 'index']);
+Route::post('/buy-item', [ShopController::class, 'buyItem'])->name('buyItem');
