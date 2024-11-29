@@ -232,48 +232,12 @@ function showUserLocation() {
     }
 }
 
-// let userMarker = null; // Declare userMarker outside of the function to persist its reference across updates
-
-// function showLiveUserLocation() {
-//     if (navigator.geolocation) {
-//         navigator.geolocation.watchPosition(
-//             position => {
-//                 const userLat = position.coords.latitude;
-//                 const userLon = position.coords.longitude;
-
-//                 if (!userMarker) {
-//                     // Add a marker to the map for the first time
-//                     userMarker = L.marker([userLat, userLon]).addTo(map);
-//                     userMarker.bindPopup("You are here!").openPopup();
-//                 } else {
-//                     // Update marker position dynamically
-//                     userMarker.setLatLng([userLat, userLon]);
-//                 }
-
-//                 // Optionally, center the map on the user's updated location
-//                 map.setView([userLat, userLon], 13);
-//             },
-//             error => {
-//                 console.error("Error accessing geolocation: ", error);
-//                 alert("Could not access your location.");
-//             },
-//             {
-//                 enableHighAccuracy: true, // Use high accuracy for better results
-//                 maximumAge: 0, // Do not use cached positions
-//                 timeout: 5000, // Set a timeout for geolocation requests
-//             }
-//         );
-//     } else {
-//         alert("Geolocation is not supported by your browser.");
-//     }
-// }
-
-
 showUserLocation();
 
 function changePollutant(pollutantType) {
     createVoronoiPolygons(pollutantType);  // Update the Voronoi polygons based on the selected type
 }
+
 
 changePollutant('pm25')
 
