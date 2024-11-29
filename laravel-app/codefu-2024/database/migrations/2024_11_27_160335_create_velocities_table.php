@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('avatars', function (Blueprint $table) {
+        Schema::create('velocities', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->integer('min');
+            $table->integer('max');
             $table->timestamps();
-            $table->string('username')->unique();
-            $table->boolean('healthy')->default(True);
-            $table->bigInteger('points')->default(0);
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->softDeletes();
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('avatars');
+        Schema::dropIfExists('velocities');
     }
 };
