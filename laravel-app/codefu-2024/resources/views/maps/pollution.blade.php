@@ -84,19 +84,38 @@
     <div id="map"></div>
 <script>
 
-const map = L.map('map').setView([41.9981, 21.4254], 12); // Skopje center
+const skopjeBounds = [
+    [41.9500, 21.3500],  // Southwest corner (latitude, longitude)
+    [42.0500, 21.5500]   // Northeast corner (latitude, longitude)
+];
+
+// const map = L.map('map').setView([41.9981, 21.4254], 12); // Skopje center
+const map = L.map('map', {
+    center: [42.000, 21.445], // Center of Skopje
+    zoom: 12,                 // Adjust zoom level as needed
+    maxBounds: skopjeBounds,  // Limit the map to Skopje
+    maxBoundsViscosity: 1.0   // Optional: make the boundaries more restrictive
+});
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-// Store reference to the previous Voronoi layer so we can remove it later
+map.setMaxBounds(skopjeBounds);
+
+// Optionally, you can restrict the zoom levels as well
+map.setMinZoom(12);  // Minimum zoom level
+map.setMaxZoom(15);  // Maximum zoom level
+
+// You can also fit the map to the bounds
+map.fitBounds(skopjeBounds);
+
 let voronoiLayer = null;
 
 // Define a function to fetch sensor data and create Voronoi polygons based on pollutant type
 function createVoronoiPolygons(pollutantType) {
     // Fetch data from the proxy server
-    fetch('http://localhost:3000/api/sensors')
+    fetch('/api/sensors')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
