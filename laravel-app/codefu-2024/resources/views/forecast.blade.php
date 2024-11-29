@@ -92,37 +92,37 @@
           
             <!-- Cards -->
             <div id="cards-container">
-              <div class="card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border border-[#797272] flex justify-between items-center p-1" data-day="yesterday">
-                <p class="text-[10px] font-light text-center text-black self-end">01.01.2021</p>
+              <div class="card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border border-[#797272] flex justify-between items-center p-1" id="cardyesterday">
+                <p class="text-[10px] font-light text-center text-black self-end" id="yesterday-date">{{date('d.m.Y',strtotime("-1 days"))}}</p>
                 <div class="flex flex-col gap-0">
                   <p class="text-[10px] font-light text-center text-black">Yesterday</p>
-                  <p class="mb-4 text-2xl font-light text-center text-black" id="yesterday-value">59 μg/m3</p>
+                  <p class="mb-4 text-2xl font-light text-center text-black" id="yesterday-value"></p>
                 </div>
-                <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px]">
+                <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px] h-[42px]">
               </div>
-              <div class="card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border border-[#797272] flex justify-between items-center p-1" data-day="today">
-                <p class="text-[10px] font-light text-center text-black self-end">01.01.2021</p>
+              <div class="card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border border-[#797272] flex justify-between items-center p-1" id="cardtoday">
+                <p class="text-[10px] font-light text-center text-black self-end" id="today-date">{{date('d.m.Y')}}</p>
                 <div class="flex flex-col gap-0">
                   <p class="text-[10px] font-light text-center text-black">Today</p>
-                  <p class="mb-4 text-2xl font-light text-center text-black" id="today-value">65 μg/m3</p>
+                  <p class="mb-4 text-2xl font-light text-center text-black" id="today-value"></p>
                 </div>
-                <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px]">
+                <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px] h-[42px]">
               </div>
-              <div class="card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border border-[#797272] flex justify-between items-center p-1" data-day="tomorrow">
-                <p class="text-[10px] font-light text-center text-black self-end">01.01.2021</p>
+              <div class="card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border border-[#797272] flex justify-between items-center p-1" id="cardtomorrow">
+                <p class="text-[10px] font-light text-center text-black self-end">{{date('d.m.Y',strtotime("+1 days"))}}</p>
                 <div class="flex flex-col gap-0">
                   <p class="text-[10px] font-light text-center text-black">Tomorrow</p>
                   <p class="mb-4 text-2xl font-light text-center text-black" id="tomorrow-value">70 μg/m3</p>
                 </div>
-                <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px]">
+                <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px] h-[42px]">
               </div>
-              <div class="card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border border-[#797272] flex justify-between items-center p-1" data-day="in2days">
-                <p class="text-[10px] font-light text-center text-black self-end">01.01.2021</p>
+              <div class="card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border border-[#797272] flex justify-between items-center p-1" id="cardin2days">
+                <p class="text-[10px] font-light text-center text-black self-end">{{date('d.m.Y',strtotime("+2 days"))}}</p>
                 <div class="flex flex-col gap-0">
                   <p class="text-[10px] font-light text-center text-black">In 2 Days</p>
                   <p class="mb-4 text-2xl font-light text-center text-black" id="in2days-value">75 μg/m3</p>
                 </div>
-                <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px]">
+                <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px] h-[42px]">
               </div>
             </div>
           
@@ -130,25 +130,26 @@
             <div class="flex justify-center items-center mt-4 ">
               <div class="flex flex-row gap-[10px] ">
                 <button 
-                  onclick="updateValues('pm2.5', this)" 
-                  class="pollution-btn active border border-[#797979] w-[70px] h-[30px] rounded-tl-[5px] rounded-tr-[5px] bg-[#858585] mt-[33px]">
+                  onclick="getData('pm25')" 
+                  class="pollution-btn active border border-[#797979] w-[70px] h-[30px] rounded-tl-[5px] rounded-tr-[5px] bg-[#858585] mt-[33px]" id="pm25">
                   pm2.5
                 </button>
                 <button 
-                  onclick="updateValues('pm10', this)" 
-                  class="pollution-btn border border-[#797979] w-[70px] h-[30px] rounded-tl-[5px] rounded-tr-[5px] bg-[#b0b0b0] opacity-50 mt-[33px]">
+                  onclick="getData('pm10')" 
+                  class="pollution-btn border border-[#797979] w-[70px] h-[30px] rounded-tl-[5px] rounded-tr-[5px] bg-[#b0b0b0] opacity-50 mt-[33px]" id="pm10">
                   pm10
                 </button>
                 <button 
-                  onclick="updateValues('no2', this)" 
-                  class="pollution-btn border border-[#797979] w-[70px] h-[30px] rounded-tl-[5px] rounded-tr-[5px] bg-[#b0b0b0] opacity-50 mt-[33px]">
+                  onclick="getData('no2')" 
+                  class="pollution-btn border border-[#797979] w-[70px] h-[30px] rounded-tl-[5px] rounded-tr-[5px] bg-[#b0b0b0] opacity-50 mt-[33px]" id="no2">
                   NO2
                 </button>
               </div>
             </div>
-          </div>
-
-
+          </div>         
+        </div>
+      </div>
+          
           <style>
             /* Styling for selected and non-selected buttons */
             .pollution-btn {
@@ -165,72 +166,66 @@
               opacity: 0.5;
             }
           </style>
-          
-          <script>
-            const pollutionData = {
-              "pm2.5": {
-                yesterday: 1,
-                today: 65,
-                tomorrow: 70,
-                in2days: 75,
-              },
-              "pm10": {
-                yesterday: 78,
-                today: 82,
-                tomorrow: 85,
-                in2days: 90,
-              },
-              "no2": {
-                yesterday: 42,
-                today: 45,
-                tomorrow: 48,
-                in2days: 50,
-              },
-            };
-          
-            const thresholds = {
-              "pm2.5": { green: 32, yellow: 70 },
-              "pm10": { green: 45, yellow: 85 },
-              "no2": { green: 55, yellow: 120 },
-            };
-          
-            function getColor(value, type) {
-              if (value <= thresholds[type].green) return "bg-green-400";
-              if (value <= thresholds[type].yellow) return "bg-yellow-400";
-              return "bg-red-400";
-            }
-          
-            function updateValues(type, button) {
-              // Update button styles
-              document.querySelectorAll(".pollution-btn").forEach(btn => btn.classList.remove("active"));
-              button.classList.add("active");
-          
-              // Update card values, colors, and images
-              const days = ["yesterday", "today", "tomorrow", "in2days"];
-              days.forEach(day => {
-                const card = document.querySelector(`.card[data-day="${day}"]`);
-                const value = pollutionData[type][day];
-                document.getElementById(`${day}-value`).textContent = `${value} μg/m3`;
-          
-                // Remove old color classes and add the new one
-                card.classList.remove("bg-green-400", "bg-yellow-400", "bg-red-400");
-                const newColor = getColor(value, type);
-                card.classList.add(newColor);
-          
-                // Update image based on the color
-                const img = card.querySelector("img");
-                if (newColor === "bg-green-400") {
-                  img.src = "{{asset('images/circled-check 1.png')}}"; // Change image when green
-                } else {
-                  img.src = "{{asset('images/circled-exclaimation 1.png')}}"; // Keep original image
+    
+    <script>
+    
+      const thresholds = {
+                  "pm25": { green: 32, yellow: 70 },
+                  "pm10": { green: 45, yellow: 85 },
+                  "no2": { green: 55, yellow: 120 },
+                };
+    
+      function getColor(value, type) {
+                  if (value <= thresholds[type].green) return "bg-green-400";
+                  if (value <= thresholds[type].yellow) return "bg-yellow-400";
+                  return "bg-red-400";
                 }
-              });
-            }
-          
-            // Initialize with pm2.5 data
-            updateValues("pm2.5", document.querySelector(".pollution-btn.active"));
-          </script>
-    </div>
-  </div>
-</body>
-</html>
+    
+    
+    
+    
+      function getData(type) {
+        fetch(`/forecast/${type}`)
+          .then(response => response.json())
+          .then(data => {
+            const days = ["yesterday", "today"];
+            Object.entries(data).forEach(([key, value]) => {
+              // key is the 'yesterday' or 'today' string
+              // value is the corresponding object, e.g., { 'value': '69' }
+              
+              const valueElement = document.querySelector(`#${key}-value`);
+              if (valueElement) {
+                valueElement.innerText = value + " μg/m3"; // Update the element with the value
+              }
+              const card = document.querySelector(`#card${key}`)
+              
+              
+              card.classList = 'card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border border-[#797272] flex justify-between items-center p-1 ' + getColor(value, type);
+              
+                 
+              const img = card.querySelector("img");
+              if (getColor(value, type) === "bg-green-400") {
+                img.src = "{{asset('images/circled-check 1.png')}}"; 
+                
+              } else if (getColor(value, type) === "bg-yellow-400") {
+                img.src = "{{asset('images/circled-exclaimation 1.png')}}"; 
+              } else {
+                img.src = "{{asset('images/cross-circle-svgrepo-com_1.png')}}";
+              }
+              
+              
+              document.querySelectorAll(".pollution-btn").forEach(btn => btn.classList.remove("active"));
+              const button = document.querySelector(`#${type}`)
+              button.classList.add("active");
+    
+              
+            });
+          })
+          .catch(error => console.error(error));
+    }
+    
+    getData('pm25');
+    
+    </script>
+  </body>
+  </html>
