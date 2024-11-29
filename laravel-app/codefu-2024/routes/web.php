@@ -8,6 +8,7 @@ use App\Http\Controllers\RegisterController;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,3 +82,16 @@ Route::get('/', function () {
 
 Route::get('/login', [LoginController::class, 'loginpage']);
 Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
+
+Route::get('/tasks/gpsBased', [TaskController::class, 'gpsBased'])->name('tasks.gps.view');
+
+Route::post('/tasks/complete', [TaskController::class, 'completeTask'])->name('tasks.complete');
+Route::post('/tasks/velocity/complete', [TaskController::class, 'completeVelocityTask'])->name('tasks.velocity.complete');
+
+Route::get('/pollution', function () {
+    return view('maps.pollution');
+});
+
+Route::get('/register3', function () {
+    return view('register3');
+});
