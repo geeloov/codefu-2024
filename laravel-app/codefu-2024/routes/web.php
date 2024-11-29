@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\LoginController;
@@ -10,6 +11,9 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MaskDetectionController;
+use App\Http\Controllers\TaskController;
+use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,8 +87,44 @@ Route::get('/', function () {
 
 Route::get('/login', [LoginController::class, 'loginpage']);
 Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
+
 Route::get('/settings', [SettingsController::class, 'settingspage'])->name('settings');
 
 Route::middleware('auth')->group(function () {
     Route::put('user/update', [UserController::class, 'update'])->name('user.update');
+});
+
+
+Route::post('/detect-mask', [MaskDetectionController::class, 'detectMask']);
+
+
+Route::get('/mask-detection', function () {
+    return view('mask_detection');
+});
+
+Route::get('/share_to_social_media', function (Request $request) {
+    $imageUrl = $request->query('imageUrl');
+    return view('share_to_social_media', ['imageUrl' => $imageUrl]);
+})->name('share_to_social_media');
+
+Route::get('forecast', function () {
+    return view('forecast');
+});
+
+Route::get('/tasks/gpsBased', [TaskController::class, 'gpsBased'])->name('tasks.gps.view');
+
+Route::post('/tasks/complete', [TaskController::class, 'completeTask'])->name('tasks.complete');
+Route::post('/tasks/velocity/complete', [TaskController::class, 'completeVelocityTask'])->name('tasks.velocity.complete');
+
+Route::get('/pollution', function () {
+    return view('maps.pollution');
+});
+
+Route::get('/register3', function () {
+    return view('register3');
+});
+
+Route::get('/api/sensors', function () {
+    $response = Http::get('http://localhost:3000/api/sensors');
+    return response()->json($response->json());
 });

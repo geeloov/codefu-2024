@@ -15,7 +15,7 @@ class LoginController extends Controller
 
     public function authenticate(Request $request){
 
-    
+        
         $validator = Validator::make($request->all(), [
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -31,7 +31,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('homepage')->with('success', 'You have successfully logged in!');
+            return redirect()->route('tasks.gps.view')->with('success', 'You have successfully logged in!');
     }else {
         return redirect()->back()->withErrors([
             'email' => 'User not found',
