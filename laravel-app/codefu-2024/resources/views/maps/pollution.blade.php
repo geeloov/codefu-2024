@@ -10,21 +10,64 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://d3js.org/d3-delaunay.v6.min.js"></script>
     <style>
-    #map { 
-        height: 85vh; 
-        border-radius: 30px 30px 0px 0px; 
-    }
+        #map { 
+            height: 85vh; 
+            border-radius: 30px 30px 0px 0px; 
+        }
 
-    #buttons {
-        position: fixed; /* This ensures the buttons are positioned relative to the viewport */
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 50000; /* Ensure the buttons are above the map */
-    }
+        #buttons {
+            position: fixed; /* This ensures the buttons are positioned relative to the viewport */
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 50000; /* Ensure the buttons are above the map */
+        }
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+        }
+
+        .modal-content {
+            text-align: center;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #f0f0f0;
+        }
+
     </style>
 </head>
 <body class="border-0">
+
+    <div id="taskPopup" class="popup">
+        <div class="popup-content">
+            <h3>Start your task</h3>
+            <button id="startTaskBtn" class="start-velocity-task-btn">Start</button>
+            <button id="stopTaskBtn" style="display: none;">Stop</button>
+            <button id="closePopup">Close</button>
+        </div>
+    </div>
+
+    <div id="redZoneModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h1 class="text-lg py-[10px]">You are currently in a polluted zone, <br>please wear a mask to rescue your Avatar.</h1>
+            <button id="cancelBtn" class="border rounded-[15px] px-[10px] py-[3px]">Cancel</button>
+            <button id="wearMaskBtn" class="border rounded-[15px] px-[10px] py-[3px]">Wear A Mask</button>
+        </div>
+    </div>      
 
     <div id="buttons" class="flex flex-col items-center justify-center fixed right-0 top-1/2 transform -translate-y-1/2 space-y-4 z-50">
         <button onclick="changePollutant('pm25')" class="w-20 h-20 bg-green-500 text-white rounded-lg hover:bg-green-600 transition flex items-center justify-center">
@@ -83,6 +126,26 @@
 
     <div id="map"></div>
 <script>
+
+function getZone(pollutantType, value) {
+    if (pollutantType === 'pm25') {
+        if (value < 12) return 'green';
+        else if (value < 35) return 'yellow';
+        else if (value < 55) return 'orange';
+        else return 'red';
+    } else if (pollutantType === 'pm10') {
+        if (value < 20) return 'green';
+        else if (value < 50) return 'yellow';
+        else if (value < 80) return 'orange';
+        else return 'red';
+    } else if (pollutantType === 'no2') {
+        if (value < 25) return 'green';
+        else if (value < 50) return 'yellow';
+        else if (value < 75) return 'orange';
+        else return 'red';
+    }
+    return 'gray';
+}
 
 const skopjeBounds = [
     [41.9500, 21.3500],  // Southwest corner (latitude, longitude)
@@ -207,7 +270,6 @@ function createVoronoiPolygons(pollutantType) {
         .catch(error => console.error('Error fetching or processing data:', error));
 }
 
-// Add a marker for the user's location
 function showUserLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -221,6 +283,42 @@ function showUserLocation() {
 
                 // Optionally, center the map on the user's location
                 map.setView([userLat, userLon], 13);
+
+                // Fetch the pollutant data (for the currently selected pollutant)
+                const pollutantType = 'pm25';  // This can be dynamically set based on user input
+                fetch('/api/sensors')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Filter sensors for the chosen pollutant type
+                        const filteredData = data.filter(sensor => sensor.type === pollutantType);
+
+                        // Convert the sensor data into coordinates and values
+                        const sensors = filteredData.map(sensor => {
+                            const [lat, lon] = sensor.position.split(',').map(coord => parseFloat(coord));
+                            return {
+                                id: sensor.sensorId,
+                                coordinates: [lon, lat],
+                                value: parseFloat(sensor.value),
+                            };
+                        });
+
+                        // Calculate the closest sensor to the user's location
+                        let closestSensor = null;
+                        let closestDistance = Infinity;
+
+                        sensors.forEach(sensor => {
+                            const distance = calculateDistance(userLat, userLon, sensor.coordinates[1], sensor.coordinates[0]);
+                            if (distance < closestDistance) {
+                                closestDistance = distance;
+                                closestSensor = sensor;
+                            }
+                        });
+
+                        // Get the zone for the closest sensor's pollution value
+                        const zone = getZone(pollutantType, closestSensor.value);
+                        console.log(`You are in a ${zone} zone based on ${pollutantType} level.`);
+                    })
+                    .catch(error => console.error('Error fetching pollution data:', error));
             },
             error => {
                 console.error("Error accessing geolocation: ", error);
@@ -232,13 +330,66 @@ function showUserLocation() {
     }
 }
 
-showUserLocation();
-
-function changePollutant(pollutantType) {
-    createVoronoiPolygons(pollutantType);  // Update the Voronoi polygons based on the selected type
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Earth's radius in km
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c; // Distance in km
+    return distance;
 }
 
 
+function changePollutant(pollutantType) {
+    createVoronoiPolygons(pollutantType);
+    // console.log(`Selected pollutant: ${pollutantType}`);
+    showUserLocation();
+}
+
+async function checkZone(zone) {
+  if (zone === 'red') {
+    try {
+      const response = await fetch('/zone-data');
+      const data = await response.json();
+
+      const isAvatarHealthy = data.isAvatarHealthy;
+      const lastTaskCompletedAgo = data.lastTaskCompletedAgo;
+
+      console.log(zone, isAvatarHealthy, lastTaskCompletedAgo)
+      if (isAvatarHealthy==true && lastTaskCompletedAgo > 23) {
+        showRedZoneModal();
+      }
+    } catch (error) {
+      console.error('Error fetching zone data:', error);
+    }
+  }
+}
+
+function showRedZoneModal() {
+  const modal = document.getElementById('redZoneModal');
+  modal.style.display = 'block';
+}
+
+// Function to close the modal
+function closeRedZoneModal() {
+  const modal = document.getElementById('redZoneModal');
+  modal.style.display = 'none';
+}
+
+// Event listeners for the buttons
+document.getElementById('cancelBtn').addEventListener('click', closeRedZoneModal);
+document.getElementById('wearMaskBtn').addEventListener('click', function () {
+    window.location.href = '/mask-detection';
+    closeRedZoneModal();
+});
+
+
+let currentZone = 'red';
+checkZone(currentZone);
 changePollutant('pm25')
 
 </script>    

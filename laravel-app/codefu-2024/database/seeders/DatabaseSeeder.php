@@ -18,8 +18,10 @@ class DatabaseSeeder extends Seeder
         $this->call(TaskSeeder::class);
         $this->call(VelocitySeeder::class);
         $this->call(AvatarSeeder::class);
-        // $this->call(AvatarItemSeeder::class);
+        $this->call(ItemCategorySeeder::class);
+        $this->call(ItemSeeder::class);
 
+        // $this->call(AvatarItemSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

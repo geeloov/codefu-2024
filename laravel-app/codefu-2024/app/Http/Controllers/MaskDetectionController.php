@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class MaskDetectionController extends Controller
 {
-    public function detectMask(Request $request)
+public function detectMask(Request $request)
 {
     // Validate that the 'image' field is present and is a base64 string
     $data = $request->validate([
@@ -81,5 +83,24 @@ public function uploadImage(Request $request)
     public function index()
 {
     return view('login');
+}
+
+public function getZoneData() {
+    $user = Auth::user();
+
+    $avatar = $user->avatar;
+    $isAvatarHealthy = $avatar && $avatar->healthy == 1;
+
+    $lastTask = $user->tasks()
+        ->where('type_id', 3)
+        ->orderBy('created_at', 'desc')
+        ->first();
+
+    $lastTaskCompletedAgo = $lastTask ? Carbon::now()->diffInHours($lastTask->completed_at) : '24';
+
+    return response()->json([
+        'isAvatarHealthy' => $isAvatarHealthy,
+        'lastTaskCompletedAgo' => $lastTaskCompletedAgo,
+    ]);
 }
 }
