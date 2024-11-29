@@ -8,6 +8,9 @@ use App\Http\Controllers\RegisterController;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\TaskController;
+use Illuminate\Support\Facades\Http;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -81,3 +84,21 @@ Route::get('/', function () {
 
 Route::get('/login', [LoginController::class, 'loginpage']);
 Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
+
+Route::get('/tasks/gpsBased', [TaskController::class, 'gpsBased'])->name('tasks.gps.view');
+
+Route::post('/tasks/complete', [TaskController::class, 'completeTask'])->name('tasks.complete');
+Route::post('/tasks/velocity/complete', [TaskController::class, 'completeVelocityTask'])->name('tasks.velocity.complete');
+
+Route::get('/pollution', function () {
+    return view('maps.pollution');
+});
+
+Route::get('/register3', function () {
+    return view('register3');
+});
+
+Route::get('/api/sensors', function () {
+    $response = Http::get('http://localhost:3000/api/sensors');
+    return response()->json($response->json());
+});

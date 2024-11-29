@@ -18,6 +18,11 @@ return new class extends Migration
             $table->bigInteger('points');
             $table->bigInteger('negative_points');
             $table->boolean('available');
+            $table->json('requirements');
+            $table->foreignId('type_id')->constrained('task_types')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->boolean('completed')->default(false);
+            $table->date('dueDate')->default(DB::raw('CURRENT_DATE'));
             $table->softDeletes();
         });
     }
