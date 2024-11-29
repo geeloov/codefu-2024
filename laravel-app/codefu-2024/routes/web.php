@@ -81,3 +81,16 @@ Route::get('/', function () {
 
 Route::get('/login', [LoginController::class, 'loginpage']);
 Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
+
+
+Route::post('/detect-mask', [MaskDetectionController::class, 'detectMask']);
+
+
+Route::get('/mask-detection', function () {
+    return view('mask_detection');
+});
+
+Route::get('/share_to_social_media', function (Request $request) {
+    $imageUrl = $request->query('imageUrl');
+    return view('share_to_social_media', ['imageUrl' => $imageUrl]);
+})->name('share_to_social_media');
