@@ -18,11 +18,28 @@ To install this project, follow these steps:
     cd codefu-2024
     ```
 
-3. Install Dependencies and Start the Laravel Project:
+3. Generating .env file and configuring DB:
+   • Copy the content inside .env.example file. 
+   • Make .env file and place the copied content in it.
+   • In .env file you need DB_DATABASE (use codefu-2024 name)
+   • Use this into .env file (for security reasons we won`t provide them)
+    ```
+    GOOGLE_CLIENT_ID=
+    GOOGLE_CLIENT_SECRET=
+    GOOGLE_REDIRECT=
+
+    FACEBOOK_CLIENT_ID=
+    FACEBOOK_CLIENT_SECRET=
+    FACEBOOK_REDIRECT=
+    
+    ```
+
+3.1 Install Dependencies and Start the Laravel Project:
     ```
     npm install # Install Node.js dependencies  
     composer install # Install PHP dependencies  
-    npm run dev # Build the frontend  
+    npm run dev # Build the frontend
+    php artisan migrate:fresh --seed # Populating the DB
     php artisan serve # Start the Laravel server 
     ```
 
