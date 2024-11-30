@@ -72,7 +72,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
 </head>
-<body class="h-[100vh] overflow-hidden">
+<body class="h-[100vh] overflow-hidden" style="height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover;">
 
     <div id="redZoneModal" class="modal bg-[#f48e90] bg-opacity-90 rounded-[20px]" style="display: none;">
         <div class="flex justify-end">
@@ -126,17 +126,18 @@
             <div class="relative">
               <!-- Subtract.png overlay -->
               <img
-                class="w-[150px] h-auto absolute bottom-[375px] left-[155px]"
+                class="w-[150px] h-auto absolute bottom-[375px] left-[155px] hidden"
                 src="{{ asset('/images/Subtract.png') }}"
                 alt=""
+                id="subtractImg"
               />
-              <div class="absolute bottom-[345px] left-[170px] w-[120px] h-[120px] overflow-auto">
+              <div class="absolute bottom-[345px] left-[170px] w-[120px] h-[120px] overflow-auto hidden" id="msgDiv">
                 <p class="text-black text-center text-[12px] leading-tight break-words">
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore
                 </p>
               </div>
               <!-- Smoggy-24.png base -->
-              <button>
+              <button onclick="addMessage()">
                   <svg id="character" width="250" height="460" xmlns="http://www.w3.org/2000/svg">
                     <image href="{{ asset('/images/smoggy/Smoggy/type-1.png') }}" id="smoggyImg" x="0" y="0" width="250" height="500px"/>
                     @if (count($hat)>0)
@@ -225,7 +226,7 @@
         </div>
     </div>
 
-    <div id="swipe-up-container" class="swipe-up">
+    <div id="swipe-up-container" class="swipe-up bg-transparent">
         <p>Swipe up for map</p>
         <p class="flex justify-center">
             <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -236,12 +237,15 @@
     
     <script src="{{asset('js/maskPrompt.js')}}"></script>
     <script>
-        fetch('http://localhost:7600/get-weather-data')
+        fetch('/weather')
             .then(response => response.json())
             .then(data => {
                 console.log('weather')
                 console.log(data['weather'])
                 document.body.style.backgroundImage = `url('/images/backgrounds/${data['weather']}.png')`;
+                document.body.style.classlist.add('bg-no-repeat h-[100vh] bg-cover')
+                // document.body.style.classlist.add('bg-cover')
+                // document.body.style.classlist.add('h-[100vh]')
             })
             .catch(error => console.error('Error fetching or processing data:', error));
                         
@@ -486,6 +490,11 @@
 
         changePollutant('pm25')
 
+
+        function addMessage(){
+            document.querySelector("#subtractImg").classList.toggle("hidden");
+            document.querySelector("#msgDiv").classList.toggle("hidden");
+        }
     </script>
 
 </body>

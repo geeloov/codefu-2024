@@ -134,4 +134,9 @@ Route::get('/api/sensors', function () {
     return response()->json($response->json());
 });
 
+Route::get('/weather', function () {
+    $response = Http::get('http://localhost:7600/get-weather-data');
+    return response()->json($response->json());
+});
+
 // });
