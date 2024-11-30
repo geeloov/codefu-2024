@@ -130,6 +130,8 @@ Route::post('/buy-item', [ShopController::class, 'buyItem'])->name('buyItem');
 Route::get('/home', [Controller::class, 'index'])->name('homepage');
 Route::post('/maskTask', [TaskController::class, 'maskTask'])->name('maskTask');
 
+Route::get('/home/finish', [Controller::class, 'homeFinish'])->name('homeFinish');
+
 Route::get('/api/sensors', function () {
     $response = Http::get('http://localhost:3000/api/sensors');
     return response()->json($response->json());
@@ -141,3 +143,21 @@ Route::get('/weather', function () {
 });
 
 // });
+
+Route::get('/api/fetch-pm10', function () {
+    try {
+        $response = Http::get('https://skopje.pulse.eco/rest/overall');
+
+        // Check if the API response is successful
+        if ($response->successful()) {
+            return response()->json($response->json());
+        } else {
+            // Handle unsuccessful response
+            return response()->json(['error' => 'Failed to fetch data from external API'], 500);
+        }
+    } catch (\Exception $e) {
+        // Log the error message
+        Log::error('Error fetching data from Skopje Pulse Eco API: ' . $e->getMessage());
+        return response()->json(['error' => 'Internal server error'], 500);
+    }
+});

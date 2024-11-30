@@ -6,3 +6,4 @@ pollution_forecast_model/models/no2/random_forest_model.pkl
 pollution_forecast_model/models/pm10/random_forest_model.pkl
 pollution_forecast_model/models/pm10/pm_10_model.keras
 pollution_forecast_model/models/pm25/random_forest_model.pkl
+python-flask-api-for-face-recogniton/model-028.model.keras

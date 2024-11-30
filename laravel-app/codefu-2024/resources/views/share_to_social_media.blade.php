@@ -54,7 +54,7 @@
             <p class="text-[17px] font-bold text-[#6b6969]">Share and raise your voice !</p>
         </div>
         <div class="flex flex-row justify-center mt-[20px]">
-            <button class="rounded-[10px] bg-[#d9d9d9]/[0.12] border border-black px-[20px] py-[10px]">Finish</button>
+            <a class="rounded-[10px] bg-[#d9d9d9]/[0.12] border border-black px-[20px] py-[10px]" id="finishBtn">Finish</a>
         </div>
         <br>
     @else
@@ -137,13 +137,86 @@
                 ctx.strokeStyle = 'black';
                 ctx.stroke();
 
+                // Function to fetch PM10 data from API and calculate AQI
+                async function fetchPM10AndCalculateAQI() {
+                    try {
+                        const response = await fetch('http://localhost:8000/api/fetch-pm10');
+                        
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch PM10 data');
+                        }
+
+                        const data = await response.json();
+                        
+                        const pm10 = data['values']['pm10'];  // Assuming the PM10 data is in the 'pm10' field from the API response
+
+                        if (pm10 !== undefined) {
+                            return calculateAQI(pm10);  // Call your AQI calculation function and return the value
+                        } else {
+                            console.error('PM10 data not found');
+                            return null;
+                        }
+                    } catch (error) {
+                        console.error('Error fetching PM10 data:', error);
+                        return null;
+                    }
+                }
+
+                // AQI Calculation function based on the PM10 concentration
+                function calculateAQI(pm10) {    
+                    let Clow, Chigh, Ilow, Ihigh;
+
+                    // Identify the breakpoints for PM10
+                    if (pm10 >= 0 && pm10 <= 54) {
+                        Clow = 0; Chigh = 54; Ilow = 0; Ihigh = 50;
+                    } else if (pm10 >= 55 && pm10 <= 154) {
+                        Clow = 55; Chigh = 154; Ilow = 51; Ihigh = 100;
+                    } else if (pm10 >= 155 && pm10 <= 254) {
+                        Clow = 155; Chigh = 254; Ilow = 101; Ihigh = 150;
+                    } else if (pm10 >= 255 && pm10 <= 354) {
+                        Clow = 255; Chigh = 354; Ilow = 151; Ihigh = 200;
+                    } else if (pm10 >= 355 && pm10 <= 424) {
+                        Clow = 355; Chigh = 424; Ilow = 201; Ihigh = 300;
+                    } else if (pm10 >= 425 && pm10 <= 504) {
+                        Clow = 425; Chigh = 504; Ilow = 301; Ihigh = 400;
+                    } else if (pm10 >= 505) {
+                        Clow = 505; Chigh = 1000; Ilow = 401; Ihigh = 500;
+                    } else {
+                        return "Invalid PM10 value";  // In case the PM10 value is outside valid ranges
+                    }
+
+                    // Apply the AQI formula
+                    const aqi = ((Ihigh - Ilow) / (Chigh - Clow)) * (pm10 - Clow) + Ilow;
+
+                    // Round to nearest whole number
+                    return Math.round(aqi);
+                }
+
+                
+                fetchPM10AndCalculateAQI().then(aqi => {
+                    if (aqi !== null) {
+                                    
+                        ctx.fillStyle = '#FFFFFF'; 
+                        ctx.fillText(aqi, 57, 22 );
+                        ctx.fillText('AQI', 58, 22 + 5);
+                    } else {
+                        ctx.fillText('N/A', 57, 22);
+                        ctx.fillText('AQI', 58, 22 + 5);
+                    }
+                }).catch(error => {
+                    console.error('Error fetching AQI:', error);
+                });
+
+
+                // ctx.fillText(fetchPM10AndCalculateAQI(), circleX, circleY - 2);
+                // ctx.fillText('AQI', circleX, circleY + 3);
                 // Add text inside the circle
-                ctx.font = '5px Arial';
-                ctx.fillStyle = 'white';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText('25', circleX, circleY - 2);
-                ctx.fillText('AQI', circleX, circleY + 3);
+                // ctx.font = '5px Arial';
+                // ctx.fillStyle = 'white';
+                // ctx.textAlign = 'center';
+                // ctx.textBaseline = 'middle';
+                // ctx.fillText('25', circleX, circleY - 2);
+                // ctx.fillText('AQI', circleX, circleY + 3);
 
 
                 //add text on left side
@@ -188,6 +261,11 @@
             const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(imageUrl)}`;
             window.open(twitterUrl, "_blank");
         }
+
+        document.querySelector("#finishBtn").addEventListener("click", function() {
+            window.location.href = '/home/finish';
+        });
+
     </script>
 </body>
 
