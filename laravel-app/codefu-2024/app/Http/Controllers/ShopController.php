@@ -31,23 +31,26 @@ class ShopController extends Controller
         $item = Item::find($itemId);
 
         if (!$item) {
-            return response()->json(['success' => false, 'message' => 'Item not found']);
+            return redirect::back()->withErrors(['msg' => 'Item not found']);
+            // return response()->json(['success' => false, 'message' => 'Item not found']);
         }
-
+        
         if ($user->avatar->items->contains($item)) {
             return $this->equipOrUnequipItem($request);
         }
 
         if ($user->points < $item->points) {
-            return response()->json(['success' => false, 'message' => 'Insufficient funds']);
+            return redirect::back()->withErrors(['msg' => 'Insufficient funds']);
+            // return response()->json(['success' => false, 'message' => 'Insufficient funds']);
         }
-
+        
         $user->points -= $item->points;
         $user->save();
-
+        
         $user->avatar->items()->attach($item);
-
-        return response()->json(['success' => true, 'message' => 'Item purchased successfully']);
+        
+        return redirect()->route('shop')->with('success', 'Item purchased successfully!');
+        // return response()->json(['success' => true, 'message' => 'Item purchased successfully']);
     }
 
     public function equipOrUnequipItem(Request $request)
