@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('image');
             $table->bigInteger('points');
             $table->boolean('available');
+            $table->integer('x');
+            $table->integer('y');
             $table->foreignId('category_id')->constrained('item_categories')->onDelete('cascade');
             $table->softDeletes();
         });

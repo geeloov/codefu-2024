@@ -135,7 +135,7 @@ Route::get('/api/sensors', function () {
 });
 
 
-Route::get('/forecast', [AirPollutionController::class, 'index']);
+Route::get('/forecast', [AirPollutionController::class, 'index'])->name('forecast');
 Route::get('/forecast/{type}', [AirPollutionController::class, 'showForecast']);
 
 Route::get('/zone-data', [MaskDetectionController::class, 'getZoneData']);

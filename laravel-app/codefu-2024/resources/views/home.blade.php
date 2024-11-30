@@ -72,15 +72,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
 </head>
-<body>
+<body class="h-[100vh] overflow-hidden ">
 
-    <div id="redZoneModal" class="modal bg-[#f48e90] bg-opacity-50 rounded-[20px]" style="display: none;">
+    <div id="redZoneModal" class="modal bg-[#f48e90] bg-opacity-90 rounded-[20px]" style="display: none;">
         <div class="flex justify-end">
-            <button id="cancelBtn" class="">
+            <button id="cancelBtn">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7 1.16667C3.77834 1.16667 1.16667 3.77834 1.16667 7C1.16667 10.2217 3.77834 12.8333 7 12.8333C10.2217 12.8333 12.8333 10.2217 12.8333 7C12.8333 3.77834 10.2217 1.16667 7 1.16667ZM0 7C0 3.13401 3.13401 0 7 0C10.866 0 14 3.13401 14 7C14 10.866 10.866 14 7 14C3.13401 14 0 10.866 0 7ZM4.05974 4.05974C4.28755 3.83194 4.6569 3.83194 4.8847 4.05974L7 6.17504L9.1153 4.05974C9.3431 3.83194 9.71245 3.83194 9.94026 4.05974C10.1681 4.28755 10.1681 4.6569 9.94026 4.8847L7.82496 7L9.94026 9.1153C10.1681 9.3431 10.1681 9.71245 9.94026 9.94026C9.71245 10.1681 9.3431 10.1681 9.1153 9.94026L7 7.82496L4.8847 9.94026C4.6569 10.1681 4.28755 10.1681 4.05974 9.94026C3.83194 9.71245 3.83194 9.3431 4.05974 9.1153L6.17504 7L4.05974 4.8847C3.83194 4.6569 3.83194 4.28755 4.05974 4.05974Z" fill="black" fill-opacity="0.5"/>
                     </svg>
-                    
             </button>
         </div>
         <div class="modal-content text-center w-[75vw]">
@@ -100,14 +99,70 @@
                     </svg>                    
             </button>
         </div>
-    </div>      
+    </div>
 
-    
-    <h1>HOME</h1>
-    <a href="{{ route('settings') }}">Settings</a><br>
-    <a href="{{ route('shop') }}">Store</a><br>
-    <a href="{{ route('tasks.gps.view') }}">Tasks</a><br>
-    <a href="{{ url('forecast') }}">Pollution forecast</a>
+
+    <div class="px-[7px] py-[20px] h-[90vh]">
+        <div class="flex justify-center">
+          <div class="flex items-start">
+            <div class="flex flex-col w-[45px] h-[100px] mt-[20px]">
+              <div>
+                <a href="{{ route('settings') }}"><img src="{{ asset('/images/settings.png') }}" alt=""/></a>
+              </div>
+              <div>
+                <a href="{{ route('shop') }}"><img src="{{ asset('/images/store.png') }}" alt="" /></a>
+              </div>
+              <div>
+                <a href="{{ route('tasks.gps.view') }}"><img src="{{ asset('/images/tasks.png') }}" alt="" /></a>
+              </div>
+              <div>
+                <a href="{{ route('forecast') }}"><img src="{{ asset('/images/forecast.png') }}" alt="" /></a>
+              </div>
+            </div>
+          </div>
+          <!-- Main -->
+          <div class="flex items-center justify-center w-full h-screen relative">
+            <!-- Container for overlay -->
+            <div class="relative">
+              <!-- Subtract.png overlay -->
+              <img
+                class="w-[150px] h-auto absolute bottom-[375px] left-[155px]"
+                src="{{ asset('/images/Subtract.png') }}"
+                alt=""
+              />
+              <div class="absolute bottom-[345px] left-[170px] w-[120px] h-[120px] overflow-auto">
+                <p class="text-black text-center text-[12px] leading-tight break-words">
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore
+                </p>
+              </div>
+              <!-- Smoggy-24.png base -->
+              <button>
+                  <svg id="character" width="250" height="460" xmlns="http://www.w3.org/2000/svg">
+                    <image href="{{ asset('/images/smoggy/Smoggy/type-1.png') }}" id="smoggyImg" x="0" y="0" width="250" height="500px"/>
+                    @if (count($hat)>0)
+                        <image href="{{ asset('/images/smoggy/' . $hat[0]['image']) }}" x="{{$hat[0]['x']}}%" y="{{$hat[0]['y']}}%" width="120" height="120">
+                    @endif
+                  </svg>
+              </button>
+            </div>
+          </div>
+          <!-- Coin -->
+          <div class="self-start">
+            <div class="flex items-center w-[65px] h-[65px]">
+              <div class="mr-2">
+                <p class="text-[25px] italic text-left text-[#2a2a2a]">67</p>
+              </div>
+              <div class="pt-[10px]">
+                <button class=" ">
+                  <img class="" src="{{ asset('/images/coin_image/Group 57.png') }}" alt="" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+
 
     <div id="map-container" class="map-container">
 
@@ -215,52 +270,47 @@
             }
 
     </script>
-
-</body>
-</html>
-
-
-<script>
-    function getZone(pollutantType, value) {
-        if (pollutantType === 'pm25') {
-            if (value < 12) return 'green';
-            else if (value < 35) return 'yellow';
-            else if (value < 55) return 'orange';
-            else return 'red';
-        } else if (pollutantType === 'pm10') {
-            if (value < 20) return 'green';
-            else if (value < 50) return 'yellow';
-            else if (value < 80) return 'orange';
-            else return 'red';
-        } else if (pollutantType === 'no2') {
-            if (value < 25) return 'green';
-            else if (value < 50) return 'yellow';
-            else if (value < 75) return 'orange';
-            else return 'red';
+    <script>
+        function getZone(pollutantType, value) {
+            if (pollutantType === 'pm25') {
+                if (value < 12) return 'green';
+                else if (value < 35) return 'yellow';
+                else if (value < 55) return 'orange';
+                else return 'red';
+            } else if (pollutantType === 'pm10') {
+                if (value < 20) return 'green';
+                else if (value < 50) return 'yellow';
+                else if (value < 80) return 'orange';
+                else return 'red';
+            } else if (pollutantType === 'no2') {
+                if (value < 25) return 'green';
+                else if (value < 50) return 'yellow';
+                else if (value < 75) return 'orange';
+                else return 'red';
+            }
+            return 'gray';
         }
-        return 'gray';
-    }
 
-    const skopjeBounds = [
-        [41.9500, 21.3500],  
-        [42.0500, 21.5500]
-    ];
-    
-    const map = L.map('map').setView([42.000, 21.445], 12);
+        const skopjeBounds = [
+            [41.9500, 21.3500],  
+            [42.0500, 21.5500]
+        ];
+        
+        const map = L.map('map').setView([42.000, 21.445], 12);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-    map.setMinZoom(12);
-    map.setMaxZoom(15);
-    
-    map.setMaxBounds(skopjeBounds);
-    map.fitBounds(skopjeBounds);
+        map.setMinZoom(12);
+        map.setMaxZoom(15);
+        
+        map.setMaxBounds(skopjeBounds);
+        map.fitBounds(skopjeBounds);
 
-    let voronoiLayer = null;
+        let voronoiLayer = null;
 
-    function createVoronoiPolygons(pollutantType) {
+        function createVoronoiPolygons(pollutantType) {
         fetch('/api/sensors')
             .then(response => {
                 if (!response.ok) {
@@ -269,40 +319,33 @@
                 return response.json();
             })
             .then(data => {
-                console.log(data); // Log fetched data for debugging
-
                 // Filter the data based on the selected pollutant type (pm10, pm25, or no2)
                 const filteredData = data.filter(sensor => sensor.type === pollutantType);
 
                 // Transform API data into sensor objects (only for matching type)
                 const sensors = filteredData.map(sensor => {
-                    const [lat, lon] = sensor.position.split(',').map(coord => parseFloat(coord)); // Split and parse coordinates
+                    const [lat, lon] = sensor.position.split(',').map(coord => parseFloat(coord));
                     return {
-                        id: sensor.sensorId, // Updated key for sensor ID
-                        coordinates: [lon, lat], // Note: Leaflet expects [lon, lat] format
-                        value: parseFloat(sensor.value), // Convert value to a number (PM or NO2)
+                        id: sensor.sensorId,
+                        coordinates: [lon, lat],
+                        value: parseFloat(sensor.value),
                     };
                 });
 
-                // Extract coordinates for Voronoi
+                // Define static geographic bounds for Skopje
+                const skopjeBounds = [21.35, 41.95, 21.55, 42.05]; // [minLon, minLat, maxLon, maxLat]
                 const points = sensors.map(sensor => sensor.coordinates);
 
-                // Create Voronoi diagram using d3
-                const bounds = map.getBounds();
-                const xMin = bounds.getWest();
-                const yMin = bounds.getSouth();
-                const xMax = bounds.getEast();
-                const yMax = bounds.getNorth();
-
+                // Create Voronoi diagram using d3 with static bounds
                 const delaunay = d3.Delaunay.from(points);
-                const voronoi = delaunay.voronoi([xMin, yMin, xMax, yMax]);
+                const voronoi = delaunay.voronoi(skopjeBounds);
 
                 // Convert Voronoi polygons to GeoJSON
                 const geoJson = {
                     type: 'FeatureCollection',
                     features: sensors.map((sensor, i) => {
                         const cell = voronoi.cellPolygon(i);
-                        if (!cell) return null; // Skip null polygons
+                        if (!cell) return null;
                         return {
                             type: 'Feature',
                             properties: { id: sensor.id, value: sensor.value },
@@ -329,7 +372,7 @@
                             value < 50 ? 'yellow' :
                             value < 75 ? 'orange' : 'red';
                     }
-                    return 'gray'; // Default fallback if pollutant type is not recognized
+                    return 'gray';
                 };
 
                 // If there's an existing Voronoi layer, remove it
@@ -353,84 +396,89 @@
             .catch(error => console.error('Error fetching or processing data:', error));
         }
 
-    function showUserLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                position => {
-                    const userLat = position.coords.latitude;
-                    const userLon = position.coords.longitude;
+        function showUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const userLat = position.coords.latitude;
+                        const userLon = position.coords.longitude;
 
-                    // Add a marker to the map
-                    const userMarker = L.marker([userLat, userLon]).addTo(map);
-                    userMarker.bindPopup("You are here!").openPopup();
+                        // Add a marker to the map
+                        const userMarker = L.marker([userLat, userLon]).addTo(map);
+                        userMarker.bindPopup("You are here!").openPopup();
 
-                    // Optionally, center the map on the user's location
-                    map.setView([userLat, userLon], 13);
+                        // Optionally, center the map on the user's location
+                        map.setView([userLat, userLon], 13);
 
-                    // Fetch the pollutant data (for the currently selected pollutant)
-                    const pollutantType = 'pm25';  // This can be dynamically set based on user input
-                    fetch('/api/sensors')
-                        .then(response => response.json())
-                        .then(data => {
-                            // Filter sensors for the chosen pollutant type
-                            const filteredData = data.filter(sensor => sensor.type === pollutantType);
+                        // Fetch the pollutant data (for the currently selected pollutant)
+                        const pollutantType = 'pm25';  // This can be dynamically set based on user input
+                        fetch('/api/sensors')
+                            .then(response => response.json())
+                            .then(data => {
+                                // Filter sensors for the chosen pollutant type
+                                const filteredData = data.filter(sensor => sensor.type === pollutantType);
 
-                            // Convert the sensor data into coordinates and values
-                            const sensors = filteredData.map(sensor => {
-                                const [lat, lon] = sensor.position.split(',').map(coord => parseFloat(coord));
-                                return {
-                                    id: sensor.sensorId,
-                                    coordinates: [lon, lat],
-                                    value: parseFloat(sensor.value),
-                                };
-                            });
+                                // Convert the sensor data into coordinates and values
+                                const sensors = filteredData.map(sensor => {
+                                    const [lat, lon] = sensor.position.split(',').map(coord => parseFloat(coord));
+                                    return {
+                                        id: sensor.sensorId,
+                                        coordinates: [lon, lat],
+                                        value: parseFloat(sensor.value),
+                                    };
+                                });
 
-                            // Calculate the closest sensor to the user's location
-                            let closestSensor = null;
-                            let closestDistance = Infinity;
+                                // Calculate the closest sensor to the user's location
+                                let closestSensor = null;
+                                let closestDistance = Infinity;
 
-                            sensors.forEach(sensor => {
-                                const distance = calculateDistance(userLat, userLon, sensor.coordinates[1], sensor.coordinates[0]);
-                                if (distance < closestDistance) {
-                                    closestDistance = distance;
-                                    closestSensor = sensor;
-                                }
-                            });
+                                sensors.forEach(sensor => {
+                                    const distance = calculateDistance(userLat, userLon, sensor.coordinates[1], sensor.coordinates[0]);
+                                    if (distance < closestDistance) {
+                                        closestDistance = distance;
+                                        closestSensor = sensor;
+                                    }
+                                });
 
-                            // Get the zone for the closest sensor's pollution value
-                            const zone = getZone(pollutantType, closestSensor.value);
-                            console.log(`You are in a ${zone} zone based on ${pollutantType} level.`);
-                        })
-                        .catch(error => console.error('Error fetching pollution data:', error));
-                },
-                error => {
-                    console.error("Error accessing geolocation: ", error);
-                    alert("Could not access your location.");
-                }
-            );
-        } else {
-            alert("Geolocation is not supported by your browser.");
+                                // Get the zone for the closest sensor's pollution value
+                                const zone = getZone(pollutantType, closestSensor.value);
+                                console.log(`You are in a ${zone} zone based on ${pollutantType} level.`);
+                            })
+                            .catch(error => console.error('Error fetching pollution data:', error));
+                    },
+                    error => {
+                        console.error("Error accessing geolocation: ", error);
+                        alert("Could not access your location.");
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
         }
-    }
 
-    function calculateDistance(lat1, lon1, lat2, lon2) {
-        const R = 6371;
-        const dLat = (lat2 - lat1) * (Math.PI / 180);
-        const dLon = (lon2 - lon1) * (Math.PI / 180);
-        const a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const distance = R * c;
-        return distance;
-    }
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * (Math.PI / 180);
+            const dLon = (lon2 - lon1) * (Math.PI / 180);
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = R * c;
+            return distance;
+        }
 
-    function changePollutant(pollutantType) {
-        createVoronoiPolygons(pollutantType);
-        showUserLocation();
-    }
+        function changePollutant(pollutantType) {
+            createVoronoiPolygons(pollutantType);
+            showUserLocation();
+        }
 
-    changePollutant('pm25')
+        changePollutant('pm25')
 
-</script>
+    </script>
+
+</body>
+</html>
+
+

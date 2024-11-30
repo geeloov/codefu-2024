@@ -220,13 +220,15 @@
                 
                 <div class="taskDiv" data-task-id="{{ $task->id }}" style="cursor: pointer;">
                     <div class="imageDiv">
-                        <img src="{{ asset('/images/welcome_images/bike.png') }}" alt="" class="gpsTaskIcon">
+                        <img src="{{ asset('/images/welcome_images/location.png') }}" alt="" class="locationTaskIcon">
                     </div>
                     <div class="taskNameDiv">
                         <div class="taskName">
-                            Lat: {{ round($requirements['lat']) }}, Lng: {{ round($requirements['lng']) }}
+                            Go near Brainster
+                            {{-- Lat: {{ round($requirements['lat']) }}, Lng: {{ round($requirements['lng']) }} --}}
                         </div>
-                        <div class="loremText">Lorem Ipsum is simply dummy text of the printing</div>
+                        {{-- <div class="loremText">Lorem Ipsum is simply dummy text of the printing</div> --}}
+                        <div class="loremText">Brainster is the nearest green zone.</div>
                     </div>
                     <div class="rewardsDiv">
                         <div>
@@ -256,11 +258,13 @@
 
                 <div class="taskDiv velocityTaskDiv" data-task-id="{{ $task->id }}" style="cursor: pointer;">
                     <div class="imageDiv">
-                        <img src="{{ asset('/images/welcome_images/location.png') }}" alt="" class="locationTaskIcon">
+                        <img src="{{ asset('/images/welcome_images/bike.png') }}" alt="" class="gpsTaskIcon">
                     </div>
                     <div class="taskNameDiv">
-                        <div class="taskName">Speed {{ implode('-', $requirements['range']) }} kmh</div>
-                        <div class="loremText">Lorem Ipsum is simply dummy text of the printing</div>
+                        {{-- <div class="taskName">Speed {{ implode('-', $requirements['range']) }} kmh</div>
+                        <div class="loremText">Lorem Ipsum is simply dummy text of the printing</div> --}}
+                        <div class="taskName">Use a bike today!</div>
+                        <div class="loremText">Running will improve your health. Requirements: move in range {{ implode('-', $requirements['range']) }} kmh.</div>
                     </div>
                     <div class="rewardsDiv">
                         <div><span class="smallPadding reward">+{{ $task->points }}</span> <img src="{{ asset('/images/welcome_images/ifTK7CcdDvL0.png') }}" alt="" class="smallIcon"></div>

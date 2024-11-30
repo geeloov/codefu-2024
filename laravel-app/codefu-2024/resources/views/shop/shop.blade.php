@@ -74,7 +74,7 @@
 
         <div>
           <div class="flex flex-row gap-1">
-            <span class="font-bold">67</span>
+            <span class="font-bold">{{Auth::user()->points}}</span>
             <img src="{{asset('/images/coin_image/Group 57.png')}}" alt="" />
           </div>
         </div>
@@ -184,6 +184,12 @@
 
                 <div class="${isActive ? 'border-green-500' : ''} relative rounded-[11px] bg-transparent border border-[#797272] p-[8px] w-[60px] h-[60px] flex items-center place-items-center place-content-center justify-center" onclick="submitForm(${item.id})">
                     <img src="/images/smoggy/${imageSrc}${item.image}" alt="${item.name}" class="object-cover">                    
+                </div>
+
+                <div>
+                  <button class="rounded-[100px] w-[10px] h-[10px] border border-black bg-[#e0e2e2]"></button>
+                  <button class="rounded-[100px] w-[10px] h-[10px] border border-black bg-[#f48e90]"></button>
+                  <button class="rounded-[100px] w-[10px] h-[10px] border border-black bg-[#9fd18c]"></button>
                 </div>
 
                 <p class="text-[15px] font-bold text-black/40">${item.name}</p>
