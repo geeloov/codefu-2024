@@ -15,8 +15,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    public function index()
-    {
+    public function index(){
 
         $user = Auth::user();
         $avatar = $user->avatar;
@@ -25,19 +24,40 @@ class Controller extends BaseController
             $query->where('category_id', 1)->where('active', true);
         }]);
 
+        $recentTask = Task::where('user_id', $user->id)
+            ->where('type_id', 3)
+            ->where('created_at', '>=', now()->subHours(2))
+            ->first();
+
+        if ($recentTask) {
+            $mask = true;
+        }else{
+            $mask = false;
+        }
+
+        
         $hat = $avatar->items;
 
-        return view('home', compact('hat'));
+        return view('home', compact('hat', 'mask'));
     }
 
-    public function homeFinish()
-    {
+    public function homeFinish() {
         $user = Auth::user();
         $avatar = $user->avatar;
 
         $avatar->load(['items' => function ($query) {
             $query->where('category_id', 1)->where('active', true);
         }]);
+
+        $recentTask = Task::where('user_id', $user->id)
+        ->where('type_id', 3)
+        ->where('created_at', '>=', now()->subHours(2))
+        ->first();
+
+        // If no task is found in the last 2 hours, redirect to the home route
+        if ($recentTask) {
+            return redirect()->route('homepage')->with('error', 'No task found in the last 2 hours.');
+        }
 
         $hat = $avatar->items;
 
@@ -57,16 +77,18 @@ class Controller extends BaseController
         $user->points += $task->points;
         $user->save();
 
-        return view('home', compact('hat'));
+        $mask = true;
+
+        return view('home', compact('hat', 'mask'));
     }
     public function currentWeather()
     {
         $currentTime = now();
-
+    
         $weatherCondition = 'sunny';
-
+    
         $isDay = $currentTime->hour >= 6 && $currentTime->hour < 19;
-
+    
         if (!$isDay) {
             $weatherState = 'night';
         } else {
@@ -78,7 +100,7 @@ class Controller extends BaseController
                 $weatherState = 'sunny';
             }
         }
-
+    
         return view('home', compact('weatherState'));
-    }
+    }    
 }

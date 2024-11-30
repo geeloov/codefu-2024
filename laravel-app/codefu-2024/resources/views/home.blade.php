@@ -143,6 +143,9 @@
                     @if (count($hat)>0)
                         <image href="{{ asset('/images/smoggy/' . $hat[0]['image']) }}" x="{{$hat[0]['x']}}%" y="{{$hat[0]['y']}}%" width="120" height="120">
                     @endif
+                    @if ($mask)
+                        <image href="{{ asset('/images/smoggy/Masks/smoggy-12.png') }}" x="25%" y="43%" width="120" height="120">
+                    @endif
                   </svg>
               </button>
             </div>
