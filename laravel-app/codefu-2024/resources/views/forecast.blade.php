@@ -111,18 +111,18 @@
               <div class="card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border border-[#797272] flex justify-between items-center p-1" id="cardtomorrow">
                 <p class="text-[10px] font-light text-center text-black self-end">{{date('d.m.Y',strtotime("+1 days"))}}</p>
                 <div class="flex flex-col gap-0">
-                  <p class="text-[10px] font-light text-center text-black">Tomorrow</p>
-                  <p class="mb-4 text-2xl font-light text-center text-black" id="tomorrow-value">70 μg/m3</p>
+                  <p class="text-[10px] font-light text-center text-black">{{date('l', strtotime('tomorrow'))}}</p>
+                  <p class="mb-4 text-2xl font-light text-center text-black" id="tomorrow-value"></p>
                 </div>
                 <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px] h-[42px]">
               </div>
               <div class="card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border border-[#797272] flex justify-between items-center p-1" id="cardin2days">
                 <p class="text-[10px] font-light text-center text-black self-end">{{date('d.m.Y',strtotime("+2 days"))}}</p>
                 <div class="flex flex-col gap-0">
-                  <p class="text-[10px] font-light text-center text-black">In 2 Days</p>
-                  <p class="mb-4 text-2xl font-light text-center text-black" id="in2days-value">75 μg/m3</p>
+                  <p class="text-[10px] font-light text-center text-black">{{date('l', strtotime('+2 days'))}}</p>
+                  <p class="mb-4 text-2xl font-light text-center text-black" id="in2days-value"></p>
                 </div>
-                <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px] h-[42px]">
+                <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px] ">
               </div>
             </div>
           
@@ -187,12 +187,12 @@
       function getData(type) {
         fetch(`/forecast/${type}`)
           .then(response => response.json())
-          .then(data => {
-            const days = ["yesterday", "today"];
+          .then(data => {      
+            console.log(data);
+                  
+            const days = ["yesterday", "today", 'tomorrow', 'in2days'];
             Object.entries(data).forEach(([key, value]) => {
-              // key is the 'yesterday' or 'today' string
-              // value is the corresponding object, e.g., { 'value': '69' }
-              
+            
               const valueElement = document.querySelector(`#${key}-value`);
               if (valueElement) {
                 valueElement.innerText = value + " μg/m3"; // Update the element with the value
@@ -217,6 +217,11 @@
               document.querySelectorAll(".pollution-btn").forEach(btn => btn.classList.remove("active"));
               const button = document.querySelector(`#${type}`)
               button.classList.add("active");
+
+
+              
+
+
     
               
             });

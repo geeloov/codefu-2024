@@ -38,11 +38,53 @@ class AirPollutionController extends Controller
         $dataToday = $responseToday->successful() ? $responseToday->json() : ['error' => 'Failed to retrieve today\'s data'];
 
 
+
+        //Flask APi data
+        $responsePredictions = Http::get("http://127.0.0.1:5000/predict/{$type}");
+        
+
+        if ($responsePredictions->successful()) {
+            $predictions = $responsePredictions->json();
+            
+            $predictionKey = "{$type}_predictions";  
+            $predictionsList = $predictions[$predictionKey];
+
+            
+
+            if (count($predictionsList) !== 48) {
+                return response()->json(['error' => 'Unexpected number of predictions'], 500);
+            }
+
+            
+            $tomorrowPredictions = array_slice($predictionsList, 0, 24);  
+            $dayAfterTomorrowPredictions = array_slice($predictionsList, 24, 24);
+
+            $tomorrowPredictions = array_map(function ($item) {
+                return $item[0];  // Extract the single numeric value from each array
+            }, $tomorrowPredictions);
+
+            // Flatten the dayAfterTomorrowPredictions array as well
+            $dayAfterTomorrowPredictions = array_map(function ($item) {
+                return $item[0];  // Extract the single numeric value from each array
+            }, $dayAfterTomorrowPredictions);
+            
+            
+            $avgTomorrow = array_sum($tomorrowPredictions) / count($tomorrowPredictions);
+            $avgDayAfterTomorrow = array_sum($dayAfterTomorrowPredictions) / count($dayAfterTomorrowPredictions);
+
+            $avgTomorrow = (int) $avgTomorrow = round($avgTomorrow); round($avgTomorrow);
+            $avgDayAfterTomorrow = (int) round($avgDayAfterTomorrow);
+
+
         return response()->json([
             'yesterday' => $dataYesterday[0]['value'],
             'today' => $dataToday['values'][$type],
+            'tomorrow' => (string)$avgTomorrow,
+            'in2days' => (string)$avgDayAfterTomorrow
         ]);
        
+    } else {
+        return response()->json(['error' => 'Failed to fetch predictions from Flask API'], 500);
     }
-
+    }
 }
