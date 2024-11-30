@@ -16,6 +16,7 @@ use App\Http\Controllers\MaskDetectionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\Controller;
 // use App\Http\Controllers\ItemController;
 
 /*
@@ -138,5 +139,7 @@ Route::get('/forecast', [AirPollutionController::class, 'index']);
 Route::get('/forecast/{type}', [AirPollutionController::class, 'showForecast']);
 
 Route::get('/zone-data', [MaskDetectionController::class, 'getZoneData']);
-Route::get('/shop', [ShopController::class, 'index']);
+Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::post('/buy-item', [ShopController::class, 'buyItem'])->name('buyItem');
+
+Route::get('/home', [Controller::class, 'index'])->name('homepage');

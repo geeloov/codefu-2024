@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
 </head>
 <body>
-<div class="flex items-center justify-center h-[100vh]">
+<div class="flex items-center justify-center h-[100vh] bg-[url('/images/bg-clouds.png')] bg-[0_13vh] bg-cover bg-no-repeat">
     <div class="w-[80%] mx-auto">
         <div class="flex justify-between">
             <div class=""> 
@@ -84,7 +84,7 @@
         </div>
         
         
-        <div class="= bg-[#D9D9D9] rounded-[14px] text-center pt-[50px] overflow-y-scroll">
+        <div class="= bg-[#D9D9D9] rounded-[14px] text-center pt-[50px] overflow-y-scroll h-[76vh]">
                 <p class="text-[23px] font-light text-[#797979]">Settings</p>
 
 
@@ -162,7 +162,7 @@
                         <div class="text-[10px] text-red-500 mt-1 mx-7">*{{ $message }}</div>
                     @enderror
 
-                    <button type="submit" class="w-[69px] border-b-0 border-l-1 border-r-1 border-t-1  border border-[#797979] rounded-tl-[5px] rounded-tr-[5px] bg-transparent">Save</button>
+                    <button type="submit" class="w-[69px] border-l-1 border-r-1 border-t-1  border border-[#797979] rounded-tl-[5px] rounded-tr-[5px] rounded-[5px] bg-transparent">Save</button>
                 </form>
         </div>
 
