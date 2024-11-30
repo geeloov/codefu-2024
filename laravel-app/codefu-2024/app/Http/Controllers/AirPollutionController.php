@@ -73,7 +73,7 @@ class AirPollutionController extends Controller
             $avgDayAfterTomorrow = array_sum($dayAfterTomorrowPredictions) / count($dayAfterTomorrowPredictions);
 
             $avgTomorrow = (int) $avgTomorrow = round($avgTomorrow); round($avgTomorrow);
-            $avgDayAfterTomorrow = (int) round($avgDayAfterTomorrow);
+            $avgDayAfterTomorrow = (int) round($avgDayAfterTomorrow)    ;
 
 
         return response()->json([

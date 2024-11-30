@@ -18,7 +18,7 @@ async function checkZone(zone) {
       const lastTaskCompletedAgo = data.lastTaskCompletedAgo;
 
       console.log(zone, isAvatarHealthy, lastTaskCompletedAgo)
-      if (isAvatarHealthy==false && lastTaskCompletedAgo > 2) {
+      if (lastTaskCompletedAgo > 2) {
         showRedZoneModal();
       }
     } catch (error) {
@@ -27,7 +27,13 @@ async function checkZone(zone) {
   }
 }
 
-document.getElementById('cancelBtn').addEventListener('click', closeRedZoneModal);
+document.querySelector('#cancelBtn').addEventListener('click', function() {
+  closeRedZoneModal();
+  let currentSrc = document.querySelector('#smoggyImg').getAttribute('href').replace('.png', '');
+  console.log(currentSrc);
+  document.querySelector('#smoggyImg').setAttribute('href', currentSrc + '-sick.png');
+});
+
 document.getElementById('wearMaskBtn').addEventListener('click', function () {
     window.location.href = '/mask-detection';
     closeRedZoneModal();
