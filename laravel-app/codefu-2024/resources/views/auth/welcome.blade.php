@@ -7,27 +7,27 @@
     <style>
             #welc {
                 text-align: center;
-                color: #6b6b6b;
-                font-size: 34px
+                color: ##2a2a2a;
+                font-size: 35px
             }
             .ptext {
-                color: #6b6b6b;
-                font-size: 24px
+                color: #2a2a2a;
+                font-size: 25px
             }
             .buttons_div{
                 display: flex;
                 justify-content: space-between;
+                margin-top: 90px;
             }
             .btn{
                 font-size: 18px;
-                color: #6b6b6b;
                 border-radius: 10px;
                 padding: 10px 25px;
                 width: 45%;
                 text-align: center;
-                border: solid;
-                border-width: 2px;
+                border: 1px solid;
                 text-decoration: none;
+                filter: drop-shadow(0px 7px 4px rgba(0,0,0,0.5));
             }
             .main{
                 width: 80%;
@@ -37,12 +37,14 @@
                 justify-content: center
             }
             .first-btn{
-                background-color: #d9d9d9;
-                border: white;
+                background-color: #3f8d8b;
+                border-color: #3f8d8b;
+                color: white;
             }
             .second-btn{
                 background-color: white;
                 border-color: #d9d9d9;
+                color: #3f8d8b;
             }
             * {box-sizing:border-box}
 
@@ -50,6 +52,9 @@
             max-width: 1000px;
             position: relative;
             margin: auto;
+            border: 2px solid #000000;
+            border-radius: 25px;
+            padding: 10px 15px; 
             }
 
             /* Hide the images by default */
@@ -67,7 +72,7 @@
             padding: 16px;
             color: white;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
             transition: 0.6s ease;
             border-radius: 0 3px 3px 0;
             user-select: none;
@@ -132,7 +137,7 @@
             }
 
             .divtext{
-                margin: 70px 0px
+                margin-top: 40px;
             }
     </style>
     {{-- <script src="https://cdn.tailwindcss.com"></script>
@@ -144,29 +149,29 @@
             <div class="wrapper">
                 <div>
                     <p id="welc">Welcome</p>
-                    <div class="slideshow-container">
                 </div>
-                    
-    
+                
+                
+            <div class="slideshow-container">
                 <div class="mySlides fade">
                     <div class="numbertext">1 / 3</div>
-                    <img src="{{asset('/images/welcome_images/welcome3.png')}}" style="width:100%">
+                    <img src="{{asset('/images/welcome_images/welcome3.png')}}" style="width:100%;">
                 </div>
               
                 <div class="mySlides fade">
                   <div class="numbertext">2 / 3</div>
-                  <img src="{{asset('/images/welcome_images/welcome2.png')}}" style="width:100%">
+                  <img src="{{asset('/images/welcome_images/welcome2.png')}}" style="width:100%;">
                 </div>
               
                 <div class="mySlides fade">
                   <div class="numbertext">3 / 3</div>
-                  <img src="{{asset('/images/welcome_images/welcome3.png')}}" style="width:100%">
+                  <img src="{{asset('/images/welcome_images/welcome3.png')}}" style="width:100%;">
                 </div>
               
                 <!-- Next and previous buttons -->
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
-              </div>
+            </div>
               <br>
               
               <!-- The dots/circles -->
@@ -176,8 +181,9 @@
                 <span class="dot" onclick="currentSlide(3)"></span>
             </div>
             <div class="divtext">
-                <p class="ptext">Be ready to save Smoggy</p>
-                <p class="ptext">Stay safe</p>
+                <span class="ptext">Be ready to save Smoggy,</span>
+                <br>
+                <span class="ptext">Stay safe</span>
             </div>
             <div class="buttons_div">
                 <a class="btn first-btn" href="{{ url('login') }}">Log In</a>

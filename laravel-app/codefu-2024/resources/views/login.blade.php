@@ -9,12 +9,12 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
 </head>
 <body>
-    <div class="mt-20 flex justify-center">
+    <div class="mt-6 flex justify-center">
         <h1 class="font-inter text-[20px]">Log In</h1>
     </div>
     <div class="mt-[25px] flex justify-center w-full gap-[30px]" id="steps">
         <div class = "w-[235px] h-[130px] bg-black rounded-[12px]">
-            <img src="" alt="">
+            <img src="{{asset('/images/login_background.png')}}" class="border-[1px] border-[#9E9B9B] rounded-[12px] " alt="">
         </div>
     </div>
     <div class="mt-[32px] flex justify-center w-full items-center">
@@ -59,7 +59,10 @@
             
             <div>
                 <div class="flex justify-center w-full mt-[15px]">
-                    <button id="register"><p class="text-sm text-center text-black">Sign up</p></button>
+                    <a href="{{url('register')}}" class="text-sm text-center text-black">
+                        {{-- <button id="register"><p class="text-sm text-center text-black">Sign up</p></button> --}}
+                        Sign Up
+                    </a>
                 </div>
             </div>
         </form>
