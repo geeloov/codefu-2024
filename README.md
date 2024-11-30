@@ -9,17 +9,17 @@
 To install this project, follow these steps:
 
 ### 1. Clone the repository to your local machine:
-    ```bash
+    ```
     git clone https://github.com/geeloov/codefu-2024/  
     ```
 
 ###2. Navigate into the project directory:
-    ```bash
+    ```
     cd codefu-2024
     ```
 
 ###3. Install Dependencies and Start the Laravel Project:
-    ```bash
+    ```
     npm install # Install Node.js dependencies  
     composer install # Install PHP dependencies  
     npm run dev # Build the frontend  
@@ -27,22 +27,22 @@ To install this project, follow these steps:
     ```
 
 ###4. Start the Map API. Run the Map API server located at /Map/server.js .
-    ```bash
+    ```
     node ./server.js
     ```
     
 ###5. Start the Pollution Forecast API. Run the Flask API for pollution forecasting located at: /pollution_forecast_model/forecast/flask_api.py .
-    ```bash
+    ```
     python flask_api.py
     ```
 
 ###6. Set Background Based on Current Weather. Run the weather background script located at:  /pollution_forecast_model/forecast/weather.py .
-    ```bash
+    ```
     python ./weather.py
     ```
 
 ###7. Enable Face Recognition. Run the face recognition API located at:  /python-flask-api-for-face-recogniton .
-    ```bash
+    ```
     python ./app.py
     ```
 
