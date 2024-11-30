@@ -81,10 +81,32 @@ class ShopController extends Controller
                 $activeItem->pivot->save();
             }
     
+
+
+
             $pivot->active = 1;
             $pivot->save();
     
             return redirect()->back()->with('success', 'Item has been equipped.');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             return response()->json($response->json());
