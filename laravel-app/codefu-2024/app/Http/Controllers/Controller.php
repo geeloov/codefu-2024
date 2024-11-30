@@ -27,4 +27,28 @@ class Controller extends BaseController
 
         return view('home', compact('hat'));
     }
+
+
+    public function currentWeather()
+    {
+        $currentTime = now();
+    
+        $weatherCondition = 'sunny';
+    
+        $isDay = $currentTime->hour >= 6 && $currentTime->hour < 19;
+    
+        if (!$isDay) {
+            $weatherState = 'night';
+        } else {
+            if ($weatherCondition === 'sunny') {
+                $weatherState = 'sunny';
+            } elseif ($weatherCondition === 'rainy') {
+                $weatherState = 'rainy';
+            } else {
+                $weatherState = 'sunny';
+            }
+        }
+    
+        return view('home', compact('weatherState'));
+    }    
 }
