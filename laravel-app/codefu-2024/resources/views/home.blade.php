@@ -150,7 +150,7 @@
           <div class="self-start">
             <div class="flex items-center w-[65px] h-[65px]">
               <div class="mr-2">
-                <p class="text-[25px] italic text-left text-[#2a2a2a]">67</p>
+                <p class="text-[25px] italic text-left text-[#2a2a2a]">{{Auth::user()->points}}</p>
               </div>
               <div class="pt-[10px]">
                 <button class=" ">
@@ -236,9 +236,10 @@
     
     <script src="{{asset('js/maskPrompt.js')}}"></script>
     <script>
-        fetch('http://localhost:5000/get-weather-data')
+        fetch('http://localhost:7600/get-weather-data')
             .then(response => response.json())
             .then(data => {
+                console.log('weather')
                 console.log(data['weather'])
                 document.body.style.backgroundImage = `url('/images/backgrounds/${data['weather']}.png')`;
             })

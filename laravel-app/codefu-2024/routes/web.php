@@ -44,18 +44,13 @@ Route::middleware([
     })->name('dashboard');
 });
 
+
+
 Route::get('/auth/google', [GoogleController::class, 'googlepage']);
 Route::get('/auth/google/callback', [GoogleController::class, 'googlecallback']);
-
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
- 
-// Route::get('/auth/callback', function () {
-//     $user = Socialite::driver('google')->user();
-// });
-
-
 Route::get('/auth/callback', function () {
     $googleUser = Socialite::driver('google')->user();
  
@@ -75,71 +70,68 @@ Route::get('/auth/callback', function () {
 
 Route::get('/auth/facebook', [FacebookController::class, 'facebookpage']);
 Route::get('/auth/facebook/callback', [FacebookController::class, 'facebookcallback']);
-
 Route::get('/register', function () {
     return view('register');
-});
+})->name('register');
 
-Route::post('/register', [RegisterController::class, 'store']);
+Route::post('/register', [RegisterController::class, 'store'])->middleware('redirect.authenticated');;
 Route::get('/welcome', function () {
     return view('auth.welcome');
-});
+})->name('welcome')->middleware('redirect.authenticated');;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/login', [LoginController::class, 'loginpage'])->name('login')->middleware('redirect.authenticated');;
+Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate')->middleware('redirect.authenticated');;
 
-Route::get('/login', [LoginController::class, 'loginpage']);
-Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
 
-Route::get('/settings', [SettingsController::class, 'settingspage'])->name('settings');
+
 
 Route::middleware('auth')->group(function () {
-    Route::put('user/update', [UserController::class, 'update'])->name('user.update');
+
+    Route::get('/settings', [SettingsController::class, 'settingspage'])->name('settings');
+
+    Route::middleware('auth')->group(function () {
+        Route::put('user/update', [UserController::class, 'update'])->name('user.update');
+    });
+    
+    
+    Route::post('/detect-mask', [MaskDetectionController::class, 'detectMask']);
+    
+    
+    Route::get('/mask-detection', function () {
+        return view('mask_detection');
+    });
+    
+    Route::get('/share_to_social_media', function (Request $request) {
+        $imageUrl = $request->query('imageUrl');
+        return view('share_to_social_media', ['imageUrl' => $imageUrl]);
+    })->name('share_to_social_media');
+    
+    Route::get('forecast', function () {
+        return view('forecast');
+    });
+    
+    Route::get('/tasks/gpsBased', [TaskController::class, 'gpsBased'])->name('tasks.gps.view');
+    
+    Route::post('/tasks/complete', [TaskController::class, 'completeTask'])->name('tasks.complete');
+    Route::post('/tasks/velocity/complete', [TaskController::class, 'completeVelocityTask'])->name('tasks.velocity.complete');
+    
+    Route::get('/pollution', function () {
+        return view('maps.pollution');
+    });
+    
+
+    Route::get('/forecast', [AirPollutionController::class, 'index'])->name('forecast');
+    Route::get('/forecast/{type}', [AirPollutionController::class, 'showForecast']);
+
+    Route::get('/zone-data', [MaskDetectionController::class, 'getZoneData']);
+    Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+    Route::post('/buy-item', [ShopController::class, 'buyItem'])->name('buyItem');
+
+    Route::get('/home', [Controller::class, 'index'])->name('homepage');
+   
+    Route::get('/api/sensors', function () {
+        $response = Http::get('http://localhost:3000/api/sensors');
+        return response()->json($response->json());
+    });
+
 });
-
-
-Route::post('/detect-mask', [MaskDetectionController::class, 'detectMask']);
-
-
-Route::get('/mask-detection', function () {
-    return view('mask_detection');
-});
-
-Route::get('/share_to_social_media', function (Request $request) {
-    $imageUrl = $request->query('imageUrl');
-    return view('share_to_social_media', ['imageUrl' => $imageUrl]);
-})->name('share_to_social_media');
-
-Route::get('forecast', function () {
-    return view('forecast');
-});
-
-Route::get('/tasks/gpsBased', [TaskController::class, 'gpsBased'])->name('tasks.gps.view');
-
-Route::post('/tasks/complete', [TaskController::class, 'completeTask'])->name('tasks.complete');
-Route::post('/tasks/velocity/complete', [TaskController::class, 'completeVelocityTask'])->name('tasks.velocity.complete');
-
-Route::get('/pollution', function () {
-    return view('maps.pollution');
-});
-
-Route::get('/register3', function () {
-    return view('register3');
-});
-
-
-Route::get('/api/sensors', function () {
-    $response = Http::get('http://localhost:3000/api/sensors');
-    return response()->json($response->json());
-});
-
-
-Route::get('/forecast', [AirPollutionController::class, 'index'])->name('forecast');
-Route::get('/forecast/{type}', [AirPollutionController::class, 'showForecast']);
-
-Route::get('/zone-data', [MaskDetectionController::class, 'getZoneData']);
-Route::get('/shop', [ShopController::class, 'index'])->name('shop');
-Route::post('/buy-item', [ShopController::class, 'buyItem'])->name('buyItem');
-
-Route::get('/home', [Controller::class, 'index'])->name('homepage');
