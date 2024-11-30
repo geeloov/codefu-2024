@@ -38,10 +38,10 @@ class AirPollutionController extends Controller
         $dataToday = $responseToday->successful() ? $responseToday->json() : ['error' => 'Failed to retrieve today\'s data'];
 
 
-
         //Flask APi data
-        $responsePredictions = Http::get("http://127.0.0.1:5000/predict/{$type}");
+        $responsePredictions = Http::get("http://127.0.0.1:3222/predict/{$type}");
         
+        // dd($responsePredictions);
 
         if ($responsePredictions->successful()) {
             $predictions = $responsePredictions->json();

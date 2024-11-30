@@ -60,7 +60,7 @@
                     <p class="dayP text-[10px] font-light text-center text-black">Yesterday</p>
                     <p class="valueP mb-4 text-2xl font-light text-center text-black" id="yesterday-value"></p>
                   </div>
-                  <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px] h-[42px]">
+                  <img src="{{asset('images/circled-exclaimation_1.png')}}" class="w-[42px] h-[42px]">
                 </div>
                 <div class="card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border-[0.1px] border-[#59a8a4] flex justify-between items-center p-1" id="cardtoday">
                   <p class="text-[10px] font-light text-center text-white self-end" id="today-date">{{date('d.m.Y')}}</p>
@@ -68,7 +68,7 @@
                     <p class="dayP text-[10px] font-light text-center text-black">Today</p>
                     <p class="valueP mb-4 text-2xl font-light text-center text-black" id="today-value"></p>
                   </div>
-                  <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px] h-[42px]">
+                  <img src="{{asset('images/circled-exclaimation_1.png')}}" class="w-[42px] h-[42px]">
                 </div>
                 <div class="card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border-[0.1px] border-[#59a8a4] flex justify-between items-center p-1" id="cardtomorrow">
                   <p class="text-[10px] font-light text-center text-white self-end">{{date('d.m.Y',strtotime("+1 days"))}}</p>
@@ -76,7 +76,7 @@
                     <p class="dayP text-[10px] font-light text-center text-black">{{date('l', strtotime('tomorrow'))}}</p>
                     <p class="valueP mb-4 text-2xl font-light text-center text-black" id="tomorrow-value"></p>
                   </div>
-                  <img src="{{asset('images/circled-exclaimation 1.png')}}" class="w-[42px] h-[42px]">
+                  <img src="{{asset('images/circled-exclaimation_1.png')}}" class="w-[42px] h-[42px]">
                 </div>
                 <div class="card mt-[18px] mx-[11px] h-[69px] rounded-[11px] bg-[#b2b1b1]/[0.43] border-[0.1px] border-[#59a8a4] flex justify-between items-center p-1" id="cardin2days">
                   <p class="text-[10px] font-light text-center text-white self-end">{{date('d.m.Y',strtotime("+2 days"))}}</p>
