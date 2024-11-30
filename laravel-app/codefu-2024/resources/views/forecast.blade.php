@@ -36,7 +36,7 @@
             <div>
                 <div class="flex flex-row gap-2">
                   <div class="mb-1">
-                    <span class="text-[25px] italic text-left text-[#2a2a2a]">67</span>
+                    <span class="text-[25px] italic text-left text-[#2a2a2a]">{{Auth::user()->points}}</span>
                   </div>
                   <div>
                     <img src="{{asset('/images/coin_image/Group 57.png')}}" class="w-[32px] h-[32px]" alt="">
