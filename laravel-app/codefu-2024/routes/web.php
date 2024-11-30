@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AirPollutionController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
@@ -13,7 +14,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MaskDetectionController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\Controller;
+// use App\Http\Controllers\ItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,7 +128,18 @@ Route::get('/register3', function () {
     return view('register3');
 });
 
+
 Route::get('/api/sensors', function () {
     $response = Http::get('http://localhost:3000/api/sensors');
     return response()->json($response->json());
 });
+
+
+Route::get('/forecast', [AirPollutionController::class, 'index']);
+Route::get('/forecast/{type}', [AirPollutionController::class, 'showForecast']);
+
+Route::get('/zone-data', [MaskDetectionController::class, 'getZoneData']);
+Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+Route::post('/buy-item', [ShopController::class, 'buyItem'])->name('buyItem');
+
+Route::get('/home', [Controller::class, 'index'])->name('homepage');

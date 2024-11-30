@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('avatar_item', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->boolean('active');
+            $table->boolean('active')->default(false);
             $table->softDeletes();
             $table->foreignId('avatar_id')->constrained('avatars')->onDelete('cascade');
             $table->foreignId('item_id')->constrained('items')->onDelete('cascade');
