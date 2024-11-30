@@ -21,7 +21,14 @@ To install this project, follow these steps:
 3. Generating .env file and configuring DB:
    • Copy the content inside .env.example file. 
    • Make .env file and place the copied content in it.
+   • For the .env key use:
+   ```
+   php artisan key:generate
+   ```
    • In .env file you need DB_DATABASE (use codefu-2024 name)
+   ```
+   DB_DATABASE= 
+   ```
    • Use this into .env file (for security reasons we won`t provide them)
     ```
     GOOGLE_CLIENT_ID=
@@ -62,6 +69,7 @@ To install this project, follow these steps:
     ```
     python ./app.py
     ```
+    You need to download model: https://drive.google.com/file/d/1UiRYvSTjF0AeCvnEh3k-cppXGUKpqwC-/view?usp=drive_link. Put it in the same folder.
 
 ---
 
