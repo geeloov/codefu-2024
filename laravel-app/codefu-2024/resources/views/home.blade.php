@@ -72,7 +72,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
 </head>
-<body class="h-[100vh] overflow-hidden ">
+<body class="h-[100vh] overflow-hidden">
 
     <div id="redZoneModal" class="modal bg-[#f48e90] bg-opacity-90 rounded-[20px]" style="display: none;">
         <div class="flex justify-end">
@@ -236,6 +236,15 @@
     
     <script src="{{asset('js/maskPrompt.js')}}"></script>
     <script>
+        fetch('http://localhost:5000/get-weather-data')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data['weather'])
+                document.body.style.backgroundImage = `url('/images/backgrounds/${data['weather']}.png')`;
+            })
+            .catch(error => console.error('Error fetching or processing data:', error));
+                        
+
         const mapContainer = document.getElementById('map-container');
         let isMapOpen = false;
 
