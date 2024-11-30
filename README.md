@@ -42,6 +42,7 @@ To install this project, follow these steps:
     ```
 
 3.1 Install Dependencies and Start the Laravel Project:
+
     ```
     npm install # Install Node.js dependencies  
     composer install # Install PHP dependencies  
