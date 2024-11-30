@@ -14,27 +14,42 @@
     <div class="flex items-center justify-center h-[100vh]">
         <div class="w-[80%] mx-auto">
             <div class="flex justify-between">
-                <div class="">
-                    <svg width="34" height="34" viewBox="0 0 34 34" fill="none"
-                        xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                        <path
+                <div class="mb-2">
+                    <a href="{{route('homepage')}}">
+                        <svg
+                          width="34"
+                          height="34"
+                          viewBox="0 0 34 34"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          preserveAspectRatio="none"
+                        >
+                          <path
                             d="M33.7499 9.87631V9.877V24.123C33.7499 27.1672 32.843 29.5669 31.2039 31.2052C29.5648 32.8435 27.1639 33.75 24.118 33.75H9.88192C6.83607 33.75 4.43527 32.8435 2.79615 31.2032C1.15701 29.5628 0.25 27.1589 0.25 24.106V9.877C0.25 6.83275 1.1569 4.43314 2.79604 2.79482C4.43519 1.15649 6.83606 0.25 9.88192 0.25H24.135C27.1809 0.25 29.5817 1.15651 31.2187 2.79471C32.8556 4.43285 33.7583 6.83222 33.7499 9.87631ZM12.1185 10.766L12.2528 10.6318C12.8437 10.0412 12.8437 9.06682 12.2528 8.47618C11.6619 7.88561 10.6873 7.88561 10.0964 8.47618L7.42606 11.1452C6.83522 11.7357 6.83512 12.7098 7.42575 13.3005C7.42585 13.3006 7.42595 13.3007 7.42606 13.3008L10.0958 15.9863L10.0964 15.9868C10.4009 16.2912 10.7887 16.434 11.1746 16.434C11.5604 16.434 11.9483 16.2912 12.2528 15.9868C12.8602 15.3797 12.8602 14.4246 12.2727 13.8172L12.2728 13.8172L12.2698 13.8142L12.2546 13.799H20.2741C22.3302 13.799 23.9871 15.4552 23.9871 17.51C23.9871 19.5641 22.3139 21.221 20.2741 21.221H11.9059C11.0706 21.221 10.3803 21.9108 10.3803 22.746C10.3803 23.5812 11.0706 24.271 11.9059 24.271H20.2741C24 24.271 27.0383 21.253 27.0383 17.527C27.0383 13.8018 24.0008 10.766 20.2741 10.766H12.1185Z"
-                            fill="#3F8D8B" stroke="black" stroke-width="0.5"></path>
-                    </svg>
-                </div>
+                            fill="#3F8D8B"
+                            stroke="black"
+                            stroke-width="0.5"
+                          ></path>
+                        </svg>
+                      </a>
+                                    </div>
 
 
-                <div>
-                    <div class="flex flex-row gap-1">
-                        <span class="font-bold">67</span>
-                        <img src="{{ asset('/images/coin_image/Group 57.png') }}" alt="">
-                    </div>
-                </div>
-            </div>
+                                    <div>
+                                        <div class="flex flex-row gap-2">
+                                          <div class="mb-1">
+                                            <span class="text-[25px] italic text-left text-[#2a2a2a]">{{Auth::user()->points}}</span>
+                                          </div>
+                                          <div>
+                                            <img src="{{asset('/images/coin_image/Group 57.png')}}" class="w-[32px] h-[32px]" alt="">
+                                          </div>
+                                        </div>
+                                    </div>
+                                    </div>
 
 
             <div
-                class="mt-[10px] shadow-lg bg-[#ffffff] rounded-[14px] text-center pt-[50px] overflow-y-scroll h-[76vh] border border-[#000000]">
+                class=" shadow-lg bg-[#ffffff] rounded-[14px] text-center pt-[50px] overflow-y-scroll h-[76vh] border border-[#000000]">
                 <p class="text-[25px] font-light  text-[#2a2a2a]">Settings</p>
 
 
@@ -42,7 +57,7 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="flex justify-between mx-5 mt-10">
+                    <div class="flex justify-between mx-5 mt-[5px]">
                         <div>
                             <p class="text-[22px] font-light  text-[#2a2a2a]">Music:</p>
                         </div>
