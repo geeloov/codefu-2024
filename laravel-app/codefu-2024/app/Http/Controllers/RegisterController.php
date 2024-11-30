@@ -46,10 +46,12 @@ class RegisterController extends Controller
 
             Auth::login($user);
 
-            return response()->json(['message' => 'User registered successfully!'], 201);
+            // return response()->json(['message' => 'User registered successfully!'], 201);
+            return redirect()->route('homepage');
         } catch (\Exception $e) {
             \Log::error('Registration failed: ' . $e->getMessage());
             return response()->json(['error' => 'Registration failed, please try again later.'], 500);
+            // return redirect()->route('homepage');
         }
     }
 }

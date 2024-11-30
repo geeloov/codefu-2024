@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'birthdate' => '2001-1-1',
             'password' =>  Hash::make('password'),
             'email' => 'user@gmail.com', 
+            'points' => 100, 
             'created_at' => now(), 
             'updated_at' => now()],
             ['fullname' => 'John', 
@@ -27,6 +28,7 @@ class UserSeeder extends Seeder
             'birthdate' => '2001-1-1',
             'password' =>  Hash::make('password'),
             'email' => 'john@gmail.com', 
+            'points' => 0, 
             'created_at' => now(), 
             'updated_at' => now()],
             ['fullname' => 'Jane', 
@@ -34,6 +36,7 @@ class UserSeeder extends Seeder
             'birthdate' => '2001-1-1',
             'password' =>  Hash::make('password'),
             'email' => 'jane@gmail.com', 
+            'points' => 0, 
             'created_at' => now(), 
             'updated_at' => now()],
         ]);

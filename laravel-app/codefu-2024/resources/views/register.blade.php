@@ -135,15 +135,25 @@
     {{-- <div class="flex justify-center w-full mt-[25px]">
         <button type="button" id="next" class="bg-white rounded-[10px] px-[30px] text-[24px] border border-black text-[#7E7E7E]">Next</button>
     </div> --}}
+    <form id="hidden-register-form" action="/register" method="POST" class="hidden">
+        @csrf
+        <input type="hidden" name="fullname" id="hidden-fullname">
+        <input type="hidden" name="email" id="hidden-email">
+        <input type="hidden" name="password" id="hidden-password">
+        <input type="hidden" name="password_confirmation" id="hidden-password-confirmation">
+        <input type="hidden" name="health_status" id="hidden-health-status">
+        <input type="hidden" name="birthdate" id="hidden-birthdate">
+        <input type="hidden" name="avatarName" id="hidden-avatarName">
+        <input type="hidden" name="avatarType" id="hidden-avatarType">
+    </form>
+    
 
     <script>
         let finalType = 1
-
         function changeColor(type){
             document.querySelector("#smoggyyImg").src = `images/smoggy/Smoggy/type-${type}.png`
             finalType = type 
         }
-
         let currentStep = 0;
         const steps = document.querySelectorAll('.step');
         const stepContents = [
@@ -161,7 +171,6 @@
             birthdate: '',
             avatarName: ''
         };
-
         const FormData = {
             fullname: document.querySelector('#fullname'),
             email: document.querySelector('#email'),
@@ -175,41 +184,70 @@
     
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     
-
-    document.getElementById('next').addEventListener('click', () => {
+        document.getElementById('next').addEventListener('click', () => {
     if (currentStep < steps.length - 1) {
         // Save data from the current step
-            if (currentStep === 0) {
-                dataStore.fullname = FormData.fullname.value;
-                dataStore.email = FormData.email.value;
-                dataStore.password = FormData.password.value;
-                dataStore.password_confirmation = FormData.password_confirmation.value;
-            } else if (currentStep === 1) {
-                dataStore.health_status = FormData.health_status.value;
-                dataStore.birthdate = FormData.birthdate.value;
-            }
-
-            // Hide current step content
-            stepContents[currentStep].classList.add('hidden');
-
-            // Update the step indicator styles
-            steps[currentStep].style.backgroundColor = '#D9D9D9';
-            currentStep++;
-            steps[currentStep].style.backgroundColor = '#F9F9F9';
-
-            // Show the next step content
-            stepContents[currentStep].classList.remove('hidden');
-        } else if (currentStep === 2) {
-            // Save final step data
-            dataStore.avatarName = FormData.avatarName.value;
-            dataStore.avatarType = finalType;
-
-            // Submit data to backend
-            console.log('Submitting data:', dataStore);
-            sendData(dataStore);
+        if (currentStep === 0) {
+            dataStore.fullname = FormData.fullname.value;
+            dataStore.email = FormData.email.value;
+            dataStore.password = FormData.password.value;
+            dataStore.password_confirmation = FormData.password_confirmation.value;
+        } else if (currentStep === 1) {
+            dataStore.health_status = FormData.health_status.value;
+            dataStore.birthdate = FormData.birthdate.value;
         }
-    });
+        // Hide current step content
+        stepContents[currentStep].classList.add('hidden');
+        // Update the step indicator styles
+        steps[currentStep].style.backgroundColor = '#D9D9D9';
+        currentStep++;
+        steps[currentStep].style.backgroundColor = '#F9F9F9';
+        // Show the next step content
+        stepContents[currentStep].classList.remove('hidden');
+    } else if (currentStep === 2) {
+        // Save final step data
+        dataStore.avatarName = FormData.avatarName.value;
+        dataStore.avatarType = finalType;
+
+        // Fill the hidden form
+        document.getElementById('hidden-fullname').value = dataStore.fullname;
+        document.getElementById('hidden-email').value = dataStore.email;
+        document.getElementById('hidden-password').value = dataStore.password;
+        document.getElementById('hidden-password-confirmation').value = dataStore.password_confirmation;
+        document.getElementById('hidden-health-status').value = dataStore.health_status;
+        document.getElementById('hidden-birthdate').value = dataStore.birthdate;
+        document.getElementById('hidden-avatarName').value = dataStore.avatarName;
+        document.getElementById('hidden-avatarType').value = dataStore.avatarType;
+
+        // Submit the hidden form
+        document.getElementById('hidden-register-form').submit();
+    }
+});
+    const sendData = async (data) => {
+        try {
+            const response = await fetch('http://localhost:8000/register', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            if (response.ok) {
+                const jsonResponse = await response.json();
+                console.log('Registration successful:', jsonResponse);
+                window.location.href = '/home';
+            } else {
+                const errorResponse = await response.json();
+                console.error('Validation errors:', errorResponse.errors);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
     </script>
-</body>
+    </body>
 
 </html>
+
+
