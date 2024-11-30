@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->boolean('healthy')->default(True);
             $table->bigInteger('points')->default(0);
+            $table->smallInteger('type')->default(1);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->softDeletes();
         });

@@ -31,7 +31,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('tasks.gps.view')->with('success', 'You have successfully logged in!');
+            return redirect()->route('homepage')->with('success', 'You have successfully logged in!');
     }else {
         return redirect()->back()->withErrors([
             'email' => 'User not found',

@@ -22,6 +22,7 @@ class RegisterController extends Controller
             'health_status' => 'required|string',
             'birthdate' => 'required|date',
             'avatarName' => 'required|string|min:2|max:255|unique:avatars,username',
+            'avatarType' => 'required|integer|min:1|max:5',
         ]);
 
         if ($validated->fails()) {
@@ -40,6 +41,7 @@ class RegisterController extends Controller
             $avatar = new Avatar();
             $avatar->user_id = $user->id;
             $avatar->username = $request->avatarName; 
+            $avatar->type = $request->avatarType; 
             $avatar->save();
 
             Auth::login($user);
