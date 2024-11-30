@@ -197,9 +197,12 @@
                         const imageElement = document.createElement('img');
                         imageElement.src = data.imageUrl;
 
-                        // Redirect if the result is "The person is not wearing a mask."
-                        window.location.href =
-                            `/share_to_social_media?imageUrl=${encodeURIComponent(data.imageUrl)}&result=${encodeURIComponent(data.result)}`;
+                        // Redirect if the result is "The person is wearing a mask."
+                        if (data.result === 'The person is wearing a mask.') {
+                            window.location.href =
+                                `/share_to_social_media?imageUrl=${encodeURIComponent(data.imageUrl)}&result=${encodeURIComponent(data.result)}`;
+                        }
+
                     }
                 })
                 .catch(error => {

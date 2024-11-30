@@ -33,17 +33,16 @@
                     width="100" height="100"></canvas>
             </div>
             <div>
-                <div class="flex flex-col place-items-center ml-[10px]">
+                <div class="flex flex-col place-items-center ml-[10px] gap-[5px]">
                     <a href="#" onclick="shareToFacebook()">
-                        <img class="w-[32px] h-[32px]" src="{{ asset('images/Acc Services.png') }}"
-                            alt="Share on Facebook">
-                    </a>
-                    <a href="#" onclick="shareToInstagram()">
-                        <img class="w-[28px] h-[28px]" src="{{ asset('images/INSTAGRAM.png') }}"
-                            alt="Share on Instagram">
+                        <img class="w-[32px] h-[32px]" src="{{ asset('images/Facebook.png') }}" alt="Share on Facebook">
                     </a>
                     <a href="#" onclick="shareToTwitter()">
-                        <img class="w-[32px] h-[32px]" src="{{ asset('images/twitter.png') }}" alt="Share on Twitter">
+                        <img class="w-[32px] h-[32px]" src="{{ asset('images/Twitter.png') }}" alt="Share on Twitter">
+                    </a>
+                    <a href="#" onclick="shareToInstagram()">
+                        <img class="w-[28px] h-[28px]" src="{{ asset('images/Instagram.png') }}"
+                            alt="Share on Instagram">
                     </a>
                     <a href="#" id="saveBtn">
                         <img class="w-[28px] h-[28px]" src="{{ asset('images/Download.png') }}" alt="Download Image">
