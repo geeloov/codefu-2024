@@ -44,30 +44,32 @@
 <body>
     <div class="mt-[30px] mr-[30px]">
         <div>
-            <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg"
-                preserveAspectRatio="none">
-                <g filter="url(#filter0_d_100_799)">
-                    <path
-                        d="M28.135 0H13.8819C7.69084 0 4 3.689 4 9.877V24.106C4 30.311 7.69084 34 13.8819 34H28.118C34.3091 34 37.9999 30.311 37.9999 24.123V9.877C38.017 3.689 34.3261 0 28.135 0ZM24.2741 24.021H15.9059C15.2086 24.021 14.6303 23.443 14.6303 22.746C14.6303 22.049 15.2086 21.471 15.9059 21.471H24.2741C26.4512 21.471 28.2371 19.703 28.2371 17.51C28.2371 15.317 26.4682 13.549 24.2741 13.549H15.6508L16.093 13.991C16.5863 14.501 16.5863 15.3 16.076 15.81C15.8209 16.065 15.4977 16.184 15.1746 16.184C14.8514 16.184 14.5282 16.065 14.2731 15.81L11.6028 13.124C11.1095 12.631 11.1095 11.815 11.6028 11.322L14.2731 8.653C14.7664 8.16 15.5828 8.16 16.076 8.653C16.5693 9.146 16.5693 9.962 16.076 10.455L15.5147 11.016H24.2741C27.8629 11.016 30.7883 13.94 30.7883 17.527C30.7883 21.114 27.8629 24.021 24.2741 24.021Z"
-                        fill="black" fill-opacity="0.61" shape-rendering="crispEdges"></path>
-                </g>
-                <defs>
-                    <filter id="filter0_d_100_799" x="0" y="0" width="42" height="42"
-                        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-                        <feColorMatrix in="SourceAlpha" type="matrix"
-                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
-                        <feOffset dy="4"></feOffset>
-                        <feGaussianBlur stdDeviation="2"></feGaussianBlur>
-                        <feComposite in2="hardAlpha" operator="out"></feComposite>
-                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0">
-                        </feColorMatrix>
-                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_100_799"></feBlend>
-                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_100_799" result="shape">
-                        </feBlend>
-                    </filter>
-                </defs>
-            </svg>
+            <a href="{{route('homepage')}}">
+                <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="none">
+                    <g filter="url(#filter0_d_100_799)">
+                        <path
+                            d="M28.135 0H13.8819C7.69084 0 4 3.689 4 9.877V24.106C4 30.311 7.69084 34 13.8819 34H28.118C34.3091 34 37.9999 30.311 37.9999 24.123V9.877C38.017 3.689 34.3261 0 28.135 0ZM24.2741 24.021H15.9059C15.2086 24.021 14.6303 23.443 14.6303 22.746C14.6303 22.049 15.2086 21.471 15.9059 21.471H24.2741C26.4512 21.471 28.2371 19.703 28.2371 17.51C28.2371 15.317 26.4682 13.549 24.2741 13.549H15.6508L16.093 13.991C16.5863 14.501 16.5863 15.3 16.076 15.81C15.8209 16.065 15.4977 16.184 15.1746 16.184C14.8514 16.184 14.5282 16.065 14.2731 15.81L11.6028 13.124C11.1095 12.631 11.1095 11.815 11.6028 11.322L14.2731 8.653C14.7664 8.16 15.5828 8.16 16.076 8.653C16.5693 9.146 16.5693 9.962 16.076 10.455L15.5147 11.016H24.2741C27.8629 11.016 30.7883 13.94 30.7883 17.527C30.7883 21.114 27.8629 24.021 24.2741 24.021Z"
+                            fill="black" fill-opacity="0.61" shape-rendering="crispEdges"></path>
+                    </g>
+                    <defs>
+                        <filter id="filter0_d_100_799" x="0" y="0" width="42" height="42"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                            <feColorMatrix in="SourceAlpha" type="matrix"
+                                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
+                            <feOffset dy="4"></feOffset>
+                            <feGaussianBlur stdDeviation="2"></feGaussianBlur>
+                            <feComposite in2="hardAlpha" operator="out"></feComposite>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0">
+                            </feColorMatrix>
+                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_100_799"></feBlend>
+                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_100_799" result="shape">
+                            </feBlend>
+                        </filter>
+                    </defs>
+                </svg>
+            </a>
         </div>
     </div>
     <h1 class="text-[15px] font-bold text-[#626262] text-center">Wear a mask and save your health</h1>
@@ -199,34 +201,10 @@
 
                         // Redirect if the result is "The person is wearing a mask."
                         if (data.result === 'The person is wearing a mask.') {
-                            fetch('/maskTask', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token
-                                },
-                                body: JSON.stringify({
-                                    result: data.result,  // Send the result data
-                                    imageUrl: data.imageUrl // Send the image URL
-                                })
-                            })
-                            .then(response => response.json())
-                            .then(responseData => {
-                                if (responseData.success) {
-                                    // If the POST request was successful, then redirect to the share page
-                                    window.location.href = `/share_to_social_media?imageUrl=${encodeURIComponent(data.imageUrl)}&result=${encodeURIComponent(data.result)}`;
-                                } else {
-                                    // Handle errors or failure cases here if needed
-                                    console.error('Error posting to /maskTask:', responseData.message);
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                            });
+                            window.location.href =
+                                `/share_to_social_media?imageUrl=${encodeURIComponent(data.imageUrl)}&result=${encodeURIComponent(data.result)}`;
+                            }
                         }
-
-
-                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);

@@ -54,7 +54,7 @@
             <p class="text-[17px] font-bold text-[#6b6969]">Share and raise your voice !</p>
         </div>
         <div class="flex flex-row justify-center mt-[20px]">
-            <button class="rounded-[10px] bg-[#d9d9d9]/[0.12] border border-black px-[20px] py-[10px]">Finish</button>
+            <a class="rounded-[10px] bg-[#d9d9d9]/[0.12] border border-black px-[20px] py-[10px]" id="finishBtn">Finish</a>
         </div>
         <br>
     @else
@@ -211,12 +211,12 @@
                 // ctx.fillText(fetchPM10AndCalculateAQI(), circleX, circleY - 2);
                 // ctx.fillText('AQI', circleX, circleY + 3);
                 // Add text inside the circle
-                ctx.font = '5px Arial';
-                ctx.fillStyle = 'white';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText('25', circleX, circleY - 2);
-                ctx.fillText('AQI', circleX, circleY + 3);
+                // ctx.font = '5px Arial';
+                // ctx.fillStyle = 'white';
+                // ctx.textAlign = 'center';
+                // ctx.textBaseline = 'middle';
+                // ctx.fillText('25', circleX, circleY - 2);
+                // ctx.fillText('AQI', circleX, circleY + 3);
 
 
                 //add text on left side
@@ -261,6 +261,11 @@
             const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(imageUrl)}`;
             window.open(twitterUrl, "_blank");
         }
+
+        document.querySelector("#finishBtn").addEventListener("click", function() {
+            window.location.href = '/home/finish';
+        });
+
     </script>
 </body>
 
