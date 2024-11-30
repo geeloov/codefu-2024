@@ -43,14 +43,14 @@ To install this project, follow these steps:
 
 3.1 Install Dependencies and Start the Laravel Project:
 
-    ```
+
     npm install # Install Node.js dependencies  
     composer install # Install PHP dependencies  
     npm run dev # Build the frontend
     php artisan migrate:fresh --seed # Populating the DB
     php artisan serve # Start the Laravel server 
     
-    ```
+
 
 4. Start the Map API. Run the Map API server located at /Map/server.js .
     ```
