@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('avatar_item', function (Blueprint $table) {
+        Schema::create('item_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
-            $table->boolean('active')->default(false);
-            $table->softDeletes();
-            $table->foreignId('avatar_id')->constrained('avatars')->onDelete('cascade');
-            $table->foreignId('item_id')->constrained('items')->onDelete('cascade');
         });
+
     }
 
     /**
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('avatar_item');
+        //
     }
 };
