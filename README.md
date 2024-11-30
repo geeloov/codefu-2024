@@ -54,6 +54,8 @@ To install this project, follow these steps:
 
 4. Start the Map API. Run the Map API server located at /Map/server.js .
     ```
+    npm install cors
+    npm install express
     node ./server.js
     ```
     
