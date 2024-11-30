@@ -128,6 +128,7 @@ Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::post('/buy-item', [ShopController::class, 'buyItem'])->name('buyItem');
 
 Route::get('/home', [Controller::class, 'index'])->name('homepage');
+Route::post('/maskTask', [TaskController::class, 'maskTask'])->name('maskTask');
 
 Route::get('/api/sensors', function () {
     $response = Http::get('http://localhost:3000/api/sensors');

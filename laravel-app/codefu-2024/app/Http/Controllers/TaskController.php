@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\Models\Task;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -144,6 +146,40 @@ class TaskController extends Controller
     //     return $distance;
     // }
 
+    public function maskTask(Request $request){
+        $result = $request->input('result');
+        $imageUrl = $request->input('imageUrl');
+
+        $name = 'Take a pic';
+        $points = 3;
+        $negative = 0;
+        $available = false;
+        $requirements = json_encode(['mask' => 'wear it']);
+        $type_id = 3;
+        $user_id = Auth::user()->id; 
+        $completed = true;
+        $dueDate = now(); 
+    
+        $task = new Task();
+        $task->name = $name;
+        $task->points = $points;
+        $task->negative = $negative;
+        $task->available = $available;
+        $task->requirements = $requirements;
+        $task->type_id = $type_id;
+        $task->user_id = $user_id;
+        $task->completed = $completed;
+        $task->due_date = $dueDate;
+    
+        $task->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data received successfully!',
+            'result' => $result,
+            'imageUrl' => $imageUrl
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.

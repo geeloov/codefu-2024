@@ -199,9 +199,32 @@
 
                         // Redirect if the result is "The person is wearing a mask."
                         if (data.result === 'The person is wearing a mask.') {
-                            window.location.href =
-                                `/share_to_social_media?imageUrl=${encodeURIComponent(data.imageUrl)}&result=${encodeURIComponent(data.result)}`;
+                            fetch('/maskTask', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Include CSRF token
+                                },
+                                body: JSON.stringify({
+                                    result: data.result,  // Send the result data
+                                    imageUrl: data.imageUrl // Send the image URL
+                                })
+                            })
+                            .then(response => response.json())
+                            .then(responseData => {
+                                if (responseData.success) {
+                                    // If the POST request was successful, then redirect to the share page
+                                    window.location.href = `/share_to_social_media?imageUrl=${encodeURIComponent(data.imageUrl)}&result=${encodeURIComponent(data.result)}`;
+                                } else {
+                                    // Handle errors or failure cases here if needed
+                                    console.error('Error posting to /maskTask:', responseData.message);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
                         }
+
 
                     }
                 })
