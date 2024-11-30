@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AirPollutionController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
@@ -126,10 +127,15 @@ Route::get('/register3', function () {
     return view('register3');
 });
 
+
 Route::get('/api/sensors', function () {
     $response = Http::get('http://localhost:3000/api/sensors');
     return response()->json($response->json());
 });
+
+
+Route::get('/forecast', [AirPollutionController::class, 'index']);
+Route::get('/forecast/{type}', [AirPollutionController::class, 'showForecast']);
 
 Route::get('/zone-data', [MaskDetectionController::class, 'getZoneData']);
 Route::get('/shop', [ShopController::class, 'index']);
